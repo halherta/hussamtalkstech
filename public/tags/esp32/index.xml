@@ -218,11 +218,17 @@ CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=&amp;#34;partitions-16MiB.csv&amp;#34;
 &lt;p&gt;to flash our Micropython image onto our ESP32-S3 Devkit microcontroller:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 erase_flash
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py -p /dev/ttyUSB0 -b &lt;span style=&#34;color:#ae81ff&#34;&gt;460800&lt;/span&gt; --before default_reset --after no_reset --chip esp32s3  write_flash --flash_mode dio --flash_size 16MB --flash_freq 80m 0x0 build-ESP32_GENERIC_S3-FLASH_16M_SPIRAM_OCT/bootloader/bootloader.bin 0x8000 build-ESP32_GENERIC_S3-FLASH_16M_SPIRAM_OCT/partition_table/partition-table.bin 0x10000 build-ESP32_GENERIC_S3-FLASH_16M_SPIRAM_OCT/micropython.bin
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The esptool command for flashing the ESP32S3 module with the custom image is rather long. Thankfully, after the previous make command succeeds in building the image, it prints out the full flash command for you.&lt;/p&gt;
-&lt;p&gt;Note that because the esp-idf&amp;rsquo;s environment variables were loaded with the &lt;code&gt;export.sh&lt;/code&gt; command, the terminal should have access to the esptool programmer via the esp-idf SDK without resorting to the use of the Python virtual environment with the esptool installed in it as was done in the &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The esptool command for flashing the ESP32S3 module with the custom image can be rather long. Thankfully, after the previous make command succeeds in building the image, it prints out the full flash command for you.&lt;/p&gt;
+&lt;p&gt;In addition, the build process also generates a single binary &lt;code&gt;firmware.bin&lt;/code&gt; that combines &lt;code&gt;bootloader.bin&lt;/code&gt;, &lt;code&gt;partition-table.bin&lt;/code&gt; and &lt;code&gt;micropython.bin&lt;/code&gt;. For a shorter build command you can try:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 erase_flash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py -p /dev/ttyUSB0 -b &lt;span style=&#34;color:#ae81ff&#34;&gt;460800&lt;/span&gt; --before default_reset --after no_reset --chip esp32s3  write_flash --flash_mode dio --flash_size 16MB --flash_freq 80m 0x0 build-ESP32_GENERIC_S3-FLASH_16M_SPIRAM_OCT/firmware.bin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;or this for further brevity:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 erase_flash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 write_flash -z &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; build-ESP32_GENERIC_S3-FLASH_16M_SPIRAM_OCT/firmware.bin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that because the esp-idf&amp;rsquo;s environment variables were loaded with the &lt;code&gt;export.sh&lt;/code&gt; command, the terminal should have access to the esptool programmer via the esp-idf SDK without resorting to the use of the Python virtual environment with the esptool installed in it as was done in the &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;After resetting the board and opening Thonny we are greeted with the Micropython Shell shown below:&lt;/p&gt;
 &lt;p&gt;
-&lt;img src=&#34;fig1.png&#34; alt=&#34;Custom Micropython Shell&#34;  width=&#34;1107&#34; height=&#34;669&#34;   style=&#34;width: 100%; max-width: width=700px;&#34;/&gt;
+&lt;img src=&#34;fig1.png&#34; alt=&#34;Custom Micropython Shell&#34;  width=&#34;1107&#34; height=&#34;669&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
 &lt;/p&gt;
 &lt;p&gt;Note that the Micropython shell prints out the board name that we placed in the &lt;strong&gt;mpconfigboard.cmake&lt;/strong&gt; file for the 16MB with SPI octal ram variant: &lt;em&gt;ESP32S3 microcontroller with 16MB of Flash &amp;amp; Octal-SPIRAM&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;Now let&amp;rsquo;s run the following Micropython script to determine how much Flash and Ram is detected:&lt;/p&gt;
@@ -233,7 +239,7 @@ CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=&amp;#34;partitions-16MiB.csv&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Available Flash: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;format(esp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flash_size()))
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Available RAM: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;format(gc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mem_free()))
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;
-&lt;img src=&#34;fig2.png&#34; alt=&#34;Success!&#34;  width=&#34;1107&#34; height=&#34;669&#34;   style=&#34;width: 100%; max-width: width=700px;&#34;/&gt;
+&lt;img src=&#34;fig2.png&#34; alt=&#34;Success!&#34;  width=&#34;1107&#34; height=&#34;669&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
 &lt;/p&gt;
 &lt;p&gt;The output is provided in the figure above. It seems that our custom Micropython build can now detect and utilize all of our 16MB of Flash memory! Success!&lt;/p&gt;
 </description>
@@ -290,6 +296,63 @@ CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=&amp;#34;partitions-16MiB.csv&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;esp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flash_size()
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;
 &lt;img src=&#34;fig5.png&#34; alt=&#34;&amp;lt;strong&amp;gt;Figure 5. FLASH available&amp;lt;/strong&amp;gt;&#34;  width=&#34;872&#34; height=&#34;789&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;For Flash, it looks like Micropython is only able to detect about 8MB of the 16MB available Flash. The Micropython &lt;code&gt;ESP32_GENERIC_S3&lt;/code&gt; images all seem to support a maximum of 8MB even if the on module Flash memory is more. That&amp;rsquo;s a bummer!  I&amp;rsquo;ve seen ESP32-S3 boards with as much as 32MB of Flash being sold on Digikey. To be fair, if you purchase the &lt;strong&gt;ESP32-S3-DevKitC-1-N8R8V&lt;/strong&gt; variant of the ESP32-S3 Devkit board (with 8MB of Flash and 8MB of PSRAM), this image will be all you need.&lt;/p&gt;
+&lt;p&gt;While the prebuilt Micropython build was successfully installed onto the ESP32-S3 board and is fully functional, the fact that only half the available Flash is detected annoys me a little. In a future entry, I&amp;rsquo;ll demonstrate how to build a Micropython image from source that supports the 16MB of Flash in its entirety.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Flashing Micropython on the ESP32-S3 Microcontroller: Part 2</title>
+        <link>http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller-part-2/</link>
+        <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller-part-2/</guid>
+        <description>&lt;p&gt;I recently purchase an &lt;a class=&#34;link&#34; href=&#34;https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ESP32-S3-DevKitC-1 v1.1&lt;/a&gt; development board. I&amp;rsquo;m well versed in C but wanted to program this particular board in Micropython instead.&lt;/p&gt;
+&lt;p&gt;I got the &lt;em&gt;ESP32-S3-DevKitC-1-N16R8V&lt;/em&gt; variant with the &lt;a class=&#34;link&#34; href=&#34;https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-2_datasheet_en.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ESP32-S3-WROOM-2-N16R8V&lt;/a&gt; module soldered on. This particular module comes with 16MB of octal SPI Flash memory and 8MB of octal SPI PSRAM; plenty of program memory and RAM for all of those Micropython objects!.&lt;/p&gt;
+&lt;p&gt;To get started, the latest precompiled Micropython binary can be downloaded from the &lt;a class=&#34;link&#34; href=&#34;https://micropython.org/download/ESP32_GENERIC_S3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;official Micropython download page&lt;/a&gt;. I downloaded the latest Micropython build  (.bin format) which was the:  &lt;a class=&#34;link&#34; href=&#34;https://micropython.org/resources/firmware/ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;&lt;em&gt;ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin&lt;/em&gt;&lt;/a&gt;. Be sure to get the binary with Octal-SPIRAM support.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;:~$ wget https://micropython.org/resources/firmware/ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Once downloaded, the next step is to &lt;em&gt;flash&lt;/em&gt; the image onto the board using the esp-tool programmer. To install it, let&amp;rsquo;s first create a new virtual python environment. This looks like the following on Debian Bookworm:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;:~$ mkdir -p ~/Development/PythonVirtEnvironments/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;:~$ python3 -m venv ~/Development/PythonVirtEnvironments/EsptoolEnv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now activate the Python virtual environment and install the esptool.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;:~$ source ~/Development/PythonVirtEnvironments/EsptoolEnv/bin/activate
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;EsptoolEnv&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; :~$ pip install esptool
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To flash the Micropython bin file, connect the USB cable to the USB port on the left of the board (the one attached to the UART0 peripheral on the ESP32S3&amp;rsquo;s via the USB-Serial FTDI chip). Make sure that you are using the right port name. In my case that was &lt;code&gt;/dev/ttyUSB0&lt;/code&gt;. Run the following commands to: i) erase the  ESP32S3 module, &amp;amp; ii) program it with the downloaded binary:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;EsptoolEnv&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; :~$ esptool.py --chip esp32s3 --port /dev/ttyUSB0 erase_flash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;EsptoolEnv&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; :~$ esptool.py --chip esp32s3 --port /dev/ttyUSB0 write_flash -z &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should get the following output:&lt;/p&gt;
+&lt;p&gt;
+&lt;img src=&#34;fig1.png&#34; alt=&#34;&amp;lt;strong&amp;gt;Figure 1. Flashing Micropython on the EESP32-S3-DevKitC-1 v1.1 board&amp;lt;/strong&amp;gt;&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;Now install and run Thonny; an easy to use yet versatile Micropython IDE:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;EsptoolEnv&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; :~$ pip install thonny
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;EsptoolEnv&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; :~$ thonny
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Goto &lt;code&gt;Run-&amp;gt;Configure Interpreter&lt;/code&gt; and ensure that the &lt;code&gt;Interpreter&lt;/code&gt;tab in the &lt;code&gt;Thonny options&lt;/code&gt; look as shown below:&lt;/p&gt;
+&lt;p&gt;
+&lt;img src=&#34;fig2.png&#34; alt=&#34;&amp;lt;strong&amp;gt;Figure 2. Thonny Interpreter settings&amp;lt;/strong&amp;gt;&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;click OK on the dialog and you should be presented with the Micropython shell at the bottom of the thonny window as shown in the figure below.&lt;/p&gt;
+&lt;p&gt;
+&lt;img src=&#34;fig3.png&#34; alt=&#34;&amp;lt;strong&amp;gt;Figure 3. Micropython shell ready!&amp;lt;/strong&amp;gt;&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;To get started, let&amp;rsquo;s see how much PSRAM and Flash are detected in the Micropython shell. To find out how much PSRAM is detected, type the following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; gc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gc&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mem_free()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;
+&lt;img src=&#34;fig4.png&#34; alt=&#34;&amp;lt;strong&amp;gt;Figure 4. PSRAM available&amp;lt;/strong&amp;gt;&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;Notice that we get &lt;code&gt;8312160&lt;/code&gt; bytes. This is close enough to the 8MB of PSRAM that we were expecting (&lt;code&gt;8388608&lt;/code&gt; bytes). The difference is very likely the memory used to launch the Micropython interpreter.&lt;/p&gt;
+&lt;p&gt;Now what about Flash ?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; esp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;esp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;flash_size()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;
+&lt;img src=&#34;fig5.png&#34; alt=&#34;&amp;lt;strong&amp;gt;Figure 5. FLASH available&amp;lt;/strong&amp;gt;&#34;   style=&#34;width: 100%; max-width: 700px;&#34;/&gt;
 &lt;/p&gt;
 &lt;p&gt;For Flash, it looks like Micropython is only able to detect about 8MB of the 16MB available Flash. The Micropython &lt;code&gt;ESP32_GENERIC_S3&lt;/code&gt; images all seem to support a maximum of 8MB even if the on module Flash memory is more. That&amp;rsquo;s a bummer!  I&amp;rsquo;ve seen ESP32-S3 boards with as much as 32MB of Flash being sold on Digikey. To be fair, if you purchase the &lt;strong&gt;ESP32-S3-DevKitC-1-N8R8V&lt;/strong&gt; variant of the ESP32-S3 Devkit board (with 8MB of Flash and 8MB of PSRAM), this image will be all you need.&lt;/p&gt;
 &lt;p&gt;While the prebuilt Micropython build was successfully installed onto the ESP32-S3 board and is fully functional, the fact that only half the available Flash is detected annoys me a little. In a future entry, I&amp;rsquo;ll demonstrate how to build a Micropython image from source that supports the 16MB of Flash in its entirety.&lt;/p&gt;
