@@ -9,6 +9,9 @@ description = "Bit Manipulation Basics in C"
 tags = [
     "C",
 ]
+categories = [
+    "C",
+]
 +++
 
 

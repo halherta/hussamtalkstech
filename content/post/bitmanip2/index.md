@@ -9,6 +9,9 @@ description = "Bit Manipulation Basics in C"
 tags = [
     "C",
 ]
+categories = [
+    "C",
+]
 +++
 
 
@@ -18,7 +21,7 @@ variable (or register), without affecting the state of the rest of the
 bits in the that variable (or register). In order to understand RMW
 operations, the reader must have a solid foundation in bit manipulation.
 Bit manipulation basics were covered in the [Bit Manipulation in C Part 1 - Bit Manipulation basics]({{< relref "post/bitmanip1/index.md" >}}) 
-article.
+blog entry.
 
 
 
