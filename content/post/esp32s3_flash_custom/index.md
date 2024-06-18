@@ -1,6 +1,6 @@
 +++
 author = "Hussam Al-Hertani"
-title = "Building a Micropython Image from source targetting an ESP32-S3 Microcontroller with 16MB of Flash and 8MB SPIRAM"
+title = "Building a Micropython image from source for the ESP32-S3 with 16MB of Flash"
 date = "2024-06-17"
 draft = false
 description = "ESP32S3 in micropython"

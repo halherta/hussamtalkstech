@@ -8,11 +8,11 @@
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
         <lastBuildDate>Mon, 17 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Building a Micropython Image from source targetting an ESP32-S3 Microcontroller with 16MB of Flash and 8MB SPIRAM</title>
-        <link>http://localhost:1313/p/building-a-micropython-image-from-source-targetting-an-esp32-s3-microcontroller-with-16mb-of-flash-and-8mb-spiram/</link>
+        <title>Building a Micropython image from source for the ESP32-S3 with 16MB of Flash</title>
+        <link>http://localhost:1313/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</link>
         <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/p/building-a-micropython-image-from-source-targetting-an-esp32-s3-microcontroller-with-16mb-of-flash-and-8mb-spiram/</guid>
+        <guid>http://localhost:1313/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</guid>
         <description>&lt;p&gt;In a &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;, the flashing of a pre-built micropython image on the ESP32S3 Devkit-C-v1.1 board was demonstrated sucessfully. Unfortunately the pre-built ESP32S3 Micropython images on the &lt;a class=&#34;link&#34; href=&#34;https://micropython.org/download/ESP32_GENERIC_S3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;official Micropython wesbite site&lt;/a&gt;, support up to 8MB of Flash only. But my ESP32S3 Devkit-C-v1.1 board (&lt;em&gt;ESP32-S3-DevKitC-1-N16R8V&lt;/em&gt;) has 16MB of Flash available; half of which is not detected nor can be used. In order to get Micropython to utilize the entirety of the avalable 16MB of Flash memory, a custom Micropython image must be built from source.&lt;/p&gt;
 &lt;p&gt;To build a custom Micropython image from source one needs to do the following:&lt;/p&gt;
