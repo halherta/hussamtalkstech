@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Tiny Go on Hussam Talks Tech</title>
-        <link>http://localhost:1313/categories/tiny-go/</link>
+        <link>https://hussamtalkstech.com/categories/tiny-go/</link>
         <description>Recent content in Tiny Go on Hussam Talks Tech</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <copyright>Hussam Al-Hertani</copyright><atom:link href="http://localhost:1313/categories/tiny-go/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>Hussam Al-Hertani</copyright><atom:link href="https://hussamtalkstech.com/categories/tiny-go/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>

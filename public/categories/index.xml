@@ -2,98 +2,98 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Categories on Hussam Talks Tech</title>
-        <link>http://localhost:1313/categories/</link>
+        <link>https://hussamtalkstech.com/categories/</link>
         <description>Recent content in Categories on Hussam Talks Tech</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
-        <lastBuildDate>Mon, 17 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 17 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hussamtalkstech.com/categories/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ESP32</title>
-        <link>http://localhost:1313/categories/esp32/</link>
+        <link>https://hussamtalkstech.com/categories/esp32/</link>
         <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/esp32/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/esp32/Esp32-logo.png" alt="Featured image of post ESP32" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/esp32/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/esp32/Esp32-logo.png" alt="Featured image of post ESP32" /&gt;</description>
         </item>
         <item>
         <title>Micropython</title>
-        <link>http://localhost:1313/categories/micropython/</link>
+        <link>https://hussamtalkstech.com/categories/micropython/</link>
         <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/micropython/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/micropython/Micropython-logo.png" alt="Featured image of post Micropython" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/micropython/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/micropython/Micropython-logo.png" alt="Featured image of post Micropython" /&gt;</description>
         </item>
         <item>
         <title>C</title>
-        <link>http://localhost:1313/categories/c/</link>
+        <link>https://hussamtalkstech.com/categories/c/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/c/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/c/Cprog-logo.png" alt="Featured image of post C" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/c/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/c/Cprog-logo.png" alt="Featured image of post C" /&gt;</description>
         </item>
         <item>
         <title>Electronics</title>
-        <link>http://localhost:1313/categories/electronics/</link>
+        <link>https://hussamtalkstech.com/categories/electronics/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/electronics/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/electronics/Electronics_logo.jpg" alt="Featured image of post Electronics" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/electronics/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/electronics/Electronics_logo.jpg" alt="Featured image of post Electronics" /&gt;</description>
         </item>
         <item>
         <title>Golang</title>
-        <link>http://localhost:1313/categories/golang/</link>
+        <link>https://hussamtalkstech.com/categories/golang/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/golang/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/golang/Golang-logo.png" alt="Featured image of post Golang" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/golang/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/golang/Golang-logo.png" alt="Featured image of post Golang" /&gt;</description>
         </item>
         <item>
         <title>KiCAD</title>
-        <link>http://localhost:1313/categories/kicad/</link>
+        <link>https://hussamtalkstech.com/categories/kicad/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/kicad/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/kicad/KiCad-logo.png" alt="Featured image of post KiCAD" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/kicad/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/kicad/KiCad-logo.png" alt="Featured image of post KiCAD" /&gt;</description>
         </item>
         <item>
         <title>Nucleo</title>
-        <link>http://localhost:1313/categories/nucleo/</link>
+        <link>https://hussamtalkstech.com/categories/nucleo/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/nucleo/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/nucleo/Nucleo-logo.png" alt="Featured image of post Nucleo" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/nucleo/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/nucleo/Nucleo-logo.png" alt="Featured image of post Nucleo" /&gt;</description>
         </item>
         <item>
         <title>Pi Pico</title>
-        <link>http://localhost:1313/categories/pi-pico/</link>
+        <link>https://hussamtalkstech.com/categories/pi-pico/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/pi-pico/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/pi-pico/Pipico-logo.png" alt="Featured image of post Pi Pico" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/pi-pico/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/pi-pico/Pipico-logo.png" alt="Featured image of post Pi Pico" /&gt;</description>
         </item>
         <item>
         <title>Raspberry Pi</title>
-        <link>http://localhost:1313/categories/raspberry-pi/</link>
+        <link>https://hussamtalkstech.com/categories/raspberry-pi/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/raspberry-pi/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/raspberry-pi/Raspberrypi-logo.png" alt="Featured image of post Raspberry Pi" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/raspberry-pi/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/raspberry-pi/Raspberrypi-logo.png" alt="Featured image of post Raspberry Pi" /&gt;</description>
         </item>
         <item>
         <title>STM32</title>
-        <link>http://localhost:1313/categories/stm32/</link>
+        <link>https://hussamtalkstech.com/categories/stm32/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/stm32/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/stm32/stm32-logo.png" alt="Featured image of post STM32" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/stm32/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/stm32/stm32-logo.png" alt="Featured image of post STM32" /&gt;</description>
         </item>
         <item>
         <title>Tiny Go</title>
-        <link>http://localhost:1313/categories/tiny-go/</link>
+        <link>https://hussamtalkstech.com/categories/tiny-go/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/categories/tiny-go/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/tiny-go/Tinygo-logo.png" alt="Featured image of post Tiny Go" /&gt;</description>
+        <guid>https://hussamtalkstech.com/categories/tiny-go/</guid>
+        <description>&lt;img src="https://hussamtalkstech.com/categories/tiny-go/Tinygo-logo.png" alt="Featured image of post Tiny Go" /&gt;</description>
         </item>
         
     </channel>

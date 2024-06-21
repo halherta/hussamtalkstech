@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Pages on Hussam Talks Tech</title>
-        <link>http://localhost:1313/page/</link>
+        <link>https://hussamtalkstech.com/page/</link>
         <description>Recent content in Pages on Hussam Talks Tech</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
-        <lastBuildDate>Tue, 18 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 18 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hussamtalkstech.com/page/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>About</title>
-        <link>http://localhost:1313/about/</link>
+        <link>https://hussamtalkstech.com/about/</link>
         <pubDate>Tue, 18 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/about/</guid>
+        <guid>https://hussamtalkstech.com/about/</guid>
         <description>&lt;p&gt;Welcome to my blog! My name is Hussam Al-Hertani. I&amp;rsquo;m a College Instructor at the Electronics Engineering Technology Department at CEGEP Heritage College in Quebec Canada. I have many techie interests which includes Embedded Systems, Embedded Linux,  IOT and PCB Design. I also enjoy programming in C, Python and Go!&lt;/p&gt;
 &lt;p&gt;I plan to post many tutorials and document various projects that I intend to work on. Stay tuned!&lt;/p&gt;
 </description>
         </item>
         <item>
         <title>Archives</title>
-        <link>http://localhost:1313/archives/</link>
+        <link>https://hussamtalkstech.com/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/archives/</guid>
+        <guid>https://hussamtalkstech.com/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>http://localhost:1313/search/</link>
+        <link>https://hussamtalkstech.com/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/search/</guid>
+        <guid>https://hussamtalkstech.com/search/</guid>
         <description></description>
         </item>
         
