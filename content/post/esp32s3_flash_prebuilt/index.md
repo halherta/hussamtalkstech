@@ -14,24 +14,26 @@ categories = [
 ]
 +++
 
-I recently purchase an [ESP32-S3-DevKitC-1 v1.1](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html) development board. I'm well versed in C but wanted to program this particular board in Micropython instead.
+I recently purchase an [ESP32-S3-DevKitC-1 v1.1](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html) development board and wanted to program it Micropython.
 
-I got the *ESP32-S3-DevKitC-1-N16R8V* variant with the [ESP32-S3-WROOM-2-N16R8V](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-2_datasheet_en.pdf) module soldered on. This particular module comes with 16MB of octal SPI Flash memory and 8MB of octal SPI PSRAM; plenty of program memory and RAM for all of those Micropython objects!.
+I got the *ESP32-S3-DevKitC-1-N16R8V* variant with the [ESP32-S3-WROOM-2-N16R8V](https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-2_datasheet_en.pdf) module. This particular module comes with 16MB of octal SPI Flash memory and 8MB of octal SPI PSRAM; plenty of program memory and RAM for all of those Micropython objects!. In this blog entry, I will list the steps necessary to get Micropython up and running on this board!
 
-To get started, the latest precompiled Micropython binary can be downloaded from the [official Micropython download page](https://micropython.org/download/ESP32_GENERIC_S3/). I downloaded the latest Micropython build  (.bin format) which was the:  [*ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin*](https://micropython.org/resources/firmware/ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin). Be sure to get the binary with Octal-SPIRAM support.
+
+
+To get started, Download the latest precompiled Micropython image (Octal-SPIRAM support) from the [official Micropython download page](https://micropython.org/download/ESP32_GENERIC_S3/).
 
 ```bash
 :~$ wget https://micropython.org/resources/firmware/ESP32_GENERIC_S3-SPIRAM_OCT-20240602-v1.23.0.bin
 ```
 
-Once downloaded, the next step is to *flash* the image onto the board using the esp-tool programmer. To install it, let's first create a new virtual python environment. This looks like the following on Debian Bookworm: 
+To flash the image onto the microcontroller board, you'll need the esptool programmer software. There are many ways of installing esptool. Since esptool is a Python application, one way to install it is via Python's package manager *pip*. But you'll need to setup a virtual Python environment first. This can accomplished with the following instruction on Debian Bookworm: 
 
 ``` Bash
 :~$ mkdir -p ~/Development/PythonVirtEnvironments/
 :~$ python3 -m venv ~/Development/PythonVirtEnvironments/EsptoolEnv
 ```
 
-Now activate the Python virtual environment and install the esptool.
+Now activate the Python virtual environment and install the esptool programmer.
 
 ```Bash
 :~$ source ~/Development/PythonVirtEnvironments/EsptoolEnv/bin/activate
@@ -55,12 +57,12 @@ Now install and run Thonny; an easy to use yet versatile Micropython IDE:
 (EsptoolEnv) :~$ pip install thonny
 (EsptoolEnv) :~$ thonny
 ```
-Goto `Run->Configure Interpreter` and ensure that the `Interpreter`tab in the `Thonny options` look as shown below: 
+Goto `Run->Configure Interpreter` and ensure that the `Interpreter`tab in the `Thonny options` looks as shown below: 
 
 ![**Figure 2. Thonny Interpreter settings**](fig2.png "700px")
 
 
-click OK on the dialog and you should be presented with the Micropython shell at the bottom of the thonny window as shown in the figure below.
+click 'OK' on the dialog and you should be presented with the Micropython shell at the bottom of the thonny window as shown in the figure below.
 
 ![**Figure 3. Micropython shell ready!**](fig3.png "700px")
 
@@ -76,7 +78,7 @@ gc.mem_free()
 
 Notice that we get `8312160` bytes. This is close enough to the 8MB of PSRAM that we were expecting (`8388608` bytes). The difference is very likely the memory used to launch the Micropython interpreter.
 
-Now what about Flash ? 
+What about Flash memory ? 
 
 ```Python
 import esp
@@ -85,6 +87,6 @@ esp.flash_size()
 ```
 ![**Figure 5. FLASH available**](fig5.png "700px")
 
-For Flash, it looks like Micropython is only able to detect about 8MB of the 16MB available Flash. The Micropython `ESP32_GENERIC_S3` images all seem to support a maximum of 8MB even if the on module Flash memory is more. That's a bummer!  I've seen ESP32-S3 boards with as much as 32MB of Flash being sold on Digikey. To be fair, if you purchase the **ESP32-S3-DevKitC-1-N8R8V** variant of the ESP32-S3 Devkit board (with 8MB of Flash and 8MB of PSRAM), this image will be all you need. 
+For Flash, it looks like Micropython is only able to detect 8 of the available 16 Megabytes. The Micropython `ESP32_GENERIC_S3` images all seem to support a maximum of 8MB even if the on module Flash memory is more. What a bummer!  I've seen ESP32-S3 boards with as much as 32MB of Flash being sold on Digikey. To be fair, if you purchase the **ESP32-S3-DevKitC-1-N8R8V** variant of the ESP32-S3 Devkit board (with 8MB of Flash and 8MB of PSRAM), this image will be all you need.  
 
-While the prebuilt Micropython build was successfully installed onto the ESP32-S3 board and is fully functional, the fact that only half the available Flash is detected annoys me a little. In a future entry, I'll demonstrate how to build a Micropython image from source that supports the 16MB of Flash in its entirety.
+While the prebuilt Micropython build is fully functional, and the 8MB of Flash memory that it detected on our board will be enough for most projects, the fact that only half the available Flash is detected triggers my OCD a little. In a future entry, I'll demonstrate how to build a Micropython image from source that supports the 16MB of Flash in its entirety.

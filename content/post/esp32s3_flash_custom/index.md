@@ -14,18 +14,18 @@ categories = [
 ]
 +++
 
-In a [previous blog entry]({{< relref "post/esp32s3_flash_prebuilt/index.md" >}}), the flashing of a pre-built micropython image on the ESP32S3 Devkit-C-v1.1 board was demonstrated sucessfully. Unfortunately the ESP32S3 Micropython images on the [official Micropython wesbite site](https://micropython.org/download/ESP32_GENERIC_S3/), support up to 8MB of Flash only. The ESP32S3 Devkit-C-v1.1 board (*ESP32-S3-DevKitC-1-N16R8V*) that I have has 16MB of Flash available; half of which is not detected, nor can be used. In order to get Micropython to utilize the entirety of the avalable 16MB of Flash memory, a custom Micropython image must be built from source.
+In a [previous blog entry]({{< relref "post/esp32s3_flash_prebuilt/index.md" >}}), I successfully flashed a pre-built micropython image on the ESP32S3 Devkit-C-v1.1 board. Unfortunately the [official prebuilt ESP32-S3 images on the Micropython wesbite site](https://micropython.org/download/ESP32_GENERIC_S3/), support up to 8MB of Flash only. The ESP32S3 Devkit-C-v1.1 board (*ESP32-S3-DevKitC-1-N16R8V*) that I have has 16MB of Flash available; half of which was not detected. In order to get Micropython to utilize the entirety of the available 16MB of Flash memory, I had to build a custom Micropython image (from source).
 
-The task of building a custom Micropython image from source can be divided into the following steps:
-- [Download and Install the ESP-IDF environment and all its prerequisites](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/linux-macos-setup.html)
-- [Download the Micropython source tree and install all its prerequsites](https://github.com/micropython/micropython/tree/master/ports/esp32)
-- Add a new board variant (with 16MB flash + octal SPIRAM) for the ESP32-S3 by modifying the **ESP32_GENERIC_S3** board definitions in the Micropython source tree
-- Build a custom Micropython image based on this new variant and flash it onto the devkit board.
+The task of building a custom Micropython image can be divided into the following steps:
+- [Download and Install the ESP-IDF environment and all the necessary prerequisites](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/linux-macos-setup.html)
+- [Download the Micropython source tree and install all the necessary prerequsites](https://github.com/micropython/micropython/tree/master/ports/esp32)
+- Add a new board variant (with 16MB flash + octal SPIRAM) to the **ESP32_GENERIC_S3** board definitions folder in the Micropython source tree
+- Build a custom Micropython image based on this new variant and flash it onto the board.
 
 
 ### Download and Install the ESP-IDF environment and all prerequisites
 
-The instructions for installing the ESP-IDF on a Linux based OS are provided [here](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/linux-macos-setup.html). I will still go through all the steps below.
+The instructions for installing the ESP-IDF on a Linux based OS are provided [here](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/linux-macos-setup.html) by Espressif. I will still go through all the steps below. Please bear in mind that the ESP-IDF SDK alone needs 1.8GB. The dev tools that it downloads (in a `.espressif` folder in the home directory) can easily eat up another 4.2GB!! Make sure you have enough hard drive space. 
 
 
  Start by installing all prerequisites. For Debian this looks like:
@@ -46,11 +46,11 @@ The instructions for installing the ESP-IDF on a Linux based OS are provided [he
 
 ```
 
-Note that the last command above installs the tools (compiler, debugger e.t.c.) necessary for the esp32s3 only. If you'd like to install tools for the esp32 and the esp32-c3 let's say, replace that command with `: ~$ ./install.sh esp32s3,esp32,esp32c3`. 
+The last command (above) installs the tools (compiler, debugger e.t.c.) necessary for the esp32s3 only. If you'd like to install tools for both the ESP32 and the ESP32-C3 in addition to the ESP32-S3, replace that command with `: ~$ ./install.sh esp32s3,esp32,esp32c3`. 
  
  Also make sure that you download a version of the ESP-IDF that's [compatible](https://github.com/micropython/micropython/tree/master/ports/esp32) with Micropython. In this tutorial version 5.0.4 of the ESP-IDF is used.
 
-Once the ESP-IDF SDK is installed, you'll need to load the necessary environment variables to use it:
+Once the ESP-IDF SDK is downloaded and installed, you'll need to load the necessary environment variables to use it:
 
 ```Bash
 : $ . ~/Development/esp/esp-idf/export.sh
@@ -58,7 +58,7 @@ Once the ESP-IDF SDK is installed, you'll need to load the necessary environment
 
 ### Download the Micropython source tree and install all prerequsites
 
-First download all the necessary prerequisites for a Debian machine:
+First, download all the necessary prerequisites for a Debian machine:
 
 ```Bash
 
@@ -66,7 +66,7 @@ First download all the necessary prerequisites for a Debian machine:
 
 ```
 
-Next download the micropython source code into the `~/Development` directory that already contains the `esp/` folder
+Next, download the micropython source code into the `~/Development` directory.
 
 ```Bash
 
@@ -75,7 +75,7 @@ Next download the micropython source code into the `~/Development` directory tha
  
 ```
 
-Build the MicroPython cross-compiler mpy-cross. It is needed to pre-compile some of the built-in scripts to bytecode.
+Build the MicroPython cross-compiler mpy-cross. It's needed to pre-compile some of the built-in scripts to bytecode.
 
 ```Bash
  : $ cd ~/Development/micropython/
@@ -85,7 +85,7 @@ Build the MicroPython cross-compiler mpy-cross. It is needed to pre-compile some
  
  ### Add a new board variant (with 16MB flash + octal SPIRAM) for the ESP32-S3 
 
- In the Micropython source tree, go to where the ESP32 boards are and cd into the `ESP32_GENERIC_S3` board definition.
+ In the Micropython source tree, go to where the ESP32 boards are, and cd into the `ESP32_GENERIC_S3` board definition folder.
 
 ```Bash
  : $ cd ~/Development/micropython/ports/esp32/boards/ESP32_GENERIC_S3
@@ -130,7 +130,7 @@ Let's take a look at **board.json**:
 
 ```
 
-In the `variants` structure at the bottom, add a new variant `FLASH_16M_SPIRAM_OCT`.
+In the `variants` structure at the bottom, add a new variant `FLASH_16M_SPIRAM_OCT`. 
 The **modified board.json** should now look like:
 
 ```json
@@ -259,7 +259,7 @@ CONFIG_ESPTOOLPY_FLASHSIZE_8MB=
 CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions-4MiB.csv"
 ```
 
-We will **NOT MODIFY** this file. Instead let's create a new file called **sdkconfig.flash_16m**. We already referenced this file in the modification made to the **mpconfigboard.cmake**. The contents of the new **sdkconfig.flash_16m** should be:
+**DO NOT MODIFY** this file. Instead create a new file called **sdkconfig.flash_16m**. This file was already referenced in the modification made to the **mpconfigboard.cmake**. The contents of the new **sdkconfig.flash_16m** should be:
 
 ```
 CONFIG_ESPTOOLPY_FLASHSIZE_4MB=
@@ -268,7 +268,7 @@ CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
 
 CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions-16MiB.csv"
 ```
-Note that the contents of the **sdkconfig.flash_16m** file are remarkably similar to those of the **sdkconfig.flash_4m**. The modifications include setting the esptool FLASHSIZE variable to 16MB and including the 16MiB partition memory file instead of the 4MiB one. The partition file is already included in the Micropython source tree at `micropython//ports/esp32/partitions-16MiB.csv`.
+Note that the contents of the **sdkconfig.flash_16m** file are remarkably similar to those of the **sdkconfig.flash_4m**. The differences include setting the esptool FLASHSIZE variable to 16MB, and including the 16MiB partition memory file instead of the 4MiB one. The partition files theselves are already included in the Micropython source tree at `micropython/ports/esp32/`.
 
 With these modifications completed, we are now ready to build the image! 
 
@@ -295,7 +295,7 @@ to flash our Micropython image onto our ESP32-S3 Devkit microcontroller:
 
 The esptool command for flashing the ESP32S3 module with the custom image can be rather long. Thankfully, after the previous make command succeeds in building the image, it prints out the full flash command for you.
 
-The build process also generates a single binary `firmware.bin` that combines `bootloader.bin`, `partition-table.bin` and `micropython.bin` listed above. For a shorter build command you can try:
+The build process also generates a single binary `firmware.bin` that combines `bootloader.bin`, `partition-table.bin` and `micropython.bin` listed above. For a shorter flash command you can try:
 
 ```Bash
 : $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 erase_flash
@@ -310,15 +310,15 @@ or this for further brevity:
 
 ```
 
-Note that because the esp-idf's environment variables were loaded with the `export.sh` command, the terminal should have access to the esptool programmer via the esp-idf SDK without resorting to the use of the Python virtual environment with the esptool installed in it as was done in the [previous blog entry]({{< relref "post/esp32s3_flash_prebuilt/index.md" >}}). 
+Because the esp-idf's environment variables were loaded with the `export.sh` command, the terminal should have access to the esptool programmer via the esp-idf SDK without resorting to the use of the Python virtual environment created in the [previous blog entry]({{< relref "post/esp32s3_flash_prebuilt/index.md" >}}). 
 
-After resetting the board and opening Thonny we are greeted with the Micropython Shell shown below:
+After resetting the board and opening Thonny, we are greeted with the Micropython Shell shown below:
 
-![Custom Micropython Shell](fig1.png "700px")
+![Custom Micropython Shell](fig1.png "800px")
 
-Note that the Micropython shell prints out the board name that we placed in the **mpconfigboard.cmake** file for the 16MB with SPI octal ram variant: *ESP32S3 microcontroller with 16MB of Flash & Octal-SPIRAM*.
+The Micropython shell prints out the board name that we placed in the **mpconfigboard.cmake** file for the 16MB with SPI octal ram variant: *ESP32S3 microcontroller with 16MB of Flash & Octal-SPIRAM*.
 
-Now let's run the following Micropython script to determine how much Flash and Ram is detected:
+Now let's run the following Micropython script to determine how much Flash and RAM is detected:
 
 ``` Python
 
@@ -329,7 +329,7 @@ print("Available Flash: {}".format(esp.flash_size()))
 print("Available RAM: {}".format(gc.mem_free()))
 
 ```
-![Success!](fig2.png "700px")
+![Success!](fig2.png "800px")
 
-The output is provided in the figure above. It seems that our custom Micropython build can now detect and utilize all of our 16MB of Flash memory! Success!
+The output is provided in the figure above. It seems that our custom Micropython build is now able to take advantage of all 16MB of available Flash memory! Success!
 
