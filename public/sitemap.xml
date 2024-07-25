@@ -2,73 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hussamtalkstech.com/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/kicad/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/kicad/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-07-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/</loc>
+    <lastmod>2024-07-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2024-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/about/</loc>
+    <loc>http://localhost:1313/page/</loc>
     <lastmod>2024-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/page/</loc>
-    <lastmod>2024-06-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://hussamtalkstech.com/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</loc>
+    <loc>http://localhost:1313/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</loc>
     <lastmod>2024-06-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/</loc>
+    <loc>http://localhost:1313/tags/esp32/</loc>
     <lastmod>2024-06-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/tags/esp32/</loc>
+    <loc>http://localhost:1313/categories/esp32/</loc>
     <lastmod>2024-06-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/esp32/</loc>
+    <loc>http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/</loc>
     <lastmod>2024-06-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/p/flashing-micropython-on-the-esp32-s3-microcontroller/</loc>
+    <loc>http://localhost:1313/tags/micropython/</loc>
     <lastmod>2024-06-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/tags/micropython/</loc>
+    <loc>http://localhost:1313/categories/micropython/</loc>
     <lastmod>2024-06-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/micropython/</loc>
-    <lastmod>2024-06-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://hussamtalkstech.com/post/</loc>
-    <lastmod>2024-06-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://hussamtalkstech.com/tags/</loc>
-    <lastmod>2024-06-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://hussamtalkstech.com/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/</loc>
+    <loc>http://localhost:1313/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/</loc>
     <lastmod>2024-06-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/p/bit-manipulation-in-c-part-ii-read-modify-write-operations/</loc>
+    <loc>http://localhost:1313/p/bit-manipulation-in-c-part-ii-read-modify-write-operations/</loc>
     <lastmod>2024-06-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/tags/c/</loc>
+    <loc>http://localhost:1313/tags/c/</loc>
     <lastmod>2024-06-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/c/</loc>
+    <loc>http://localhost:1313/categories/c/</loc>
     <lastmod>2024-06-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/archives/</loc>
+    <loc>http://localhost:1313/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/electronics/</loc>
+    <loc>http://localhost:1313/categories/electronics/</loc>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/golang/</loc>
+    <loc>http://localhost:1313/categories/raspberry-pi/</loc>
   </url><url>
-    <loc>https://hussamtalkstech.com/categories/kicad/</loc>
-  </url><url>
-    <loc>https://hussamtalkstech.com/categories/nucleo/</loc>
-  </url><url>
-    <loc>https://hussamtalkstech.com/categories/pi-pico/</loc>
-  </url><url>
-    <loc>https://hussamtalkstech.com/categories/raspberry-pi/</loc>
-  </url><url>
-    <loc>https://hussamtalkstech.com/search/</loc>
-  </url><url>
-    <loc>https://hussamtalkstech.com/categories/stm32/</loc>
-  </url><url>
-    <loc>https://hussamtalkstech.com/categories/tiny-go/</loc>
+    <loc>http://localhost:1313/search/</loc>
   </url>
 </urlset>

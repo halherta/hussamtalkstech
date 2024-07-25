@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Introductory KiCad tutorial">
+<title>PCB Layout Design with KiCad Part II: Layout Creation</title>
+
+<link rel='canonical' href='http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/'>
+
+<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="PCB Layout Design with KiCad Part II: Layout Creation">
+<meta property='og:description' content="Introductory KiCad tutorial">
+<meta property='og:url' content='http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/'>
+<meta property='og:site_name' content='Hussam Talks Tech'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='KiCAD' /><meta property='article:published_time' content='2024-07-17T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-07-17T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="PCB Layout Design with KiCad Part II: Layout Creation">
+<meta name="twitter:description" content="Introductory KiCad tutorial">
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hua084da78196c2fd09413e27ac571b6a4_468446_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hussam Talks Tech</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halherta'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/kicad/" style="background-color: #2a9d8f; color: #fff;">
+                KiCAD
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/">PCB Layout Design with KiCad Part II: Layout Creation</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Introductory KiCad tutorial
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 17, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    17 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>In this blog entry, the PCB layout for the astable multivibrator circuit schematic design covered in <a class="link" href="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/" >part I</a>, will be created using the <strong>Kicad PCB Editor</strong> application. Before proceeding however the user must be made aware of the two most common measurement units and how to convert between them.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_01.png"
+    alt="Figure 1: KiCad PCB Editor. Grid settings and coordinates" width="700px"><figcaption>
+      <p>Figure 1: KiCad PCB Editor. Grid settings and coordinates</p>
+    </figcaption>
+</figure>
+
+<h3 id="importance-of-spatial-dimensions-and-units-of-measurements-for-pcb-design">Importance of spatial dimensions and units of measurements for PCB design
+</h3><p>Schematic capture is an abstract procedure and there’s no real need to keep in mind the dimensions of component symbols, wires nor the spacing between them. A schematic simply needs to be clean, readable and presentable.</p>
+<p>When laying out a PCB however, the designer <strong>must</strong> be aware of the dimensions of the footprints, traces e.t.c for many reasons. For starters, a PCB layout has finite space defined by the PCB’s outline (board edge). This space must be sufficient to carry all the layout footprints and traces. The traces; which act like wires, need to be sized adequately to allow enough current to flow through them. For example, a trace with a width of 12 mils can handle about 1A of current (assuming 1 \(\frac{oz}{ft^2}\) copper depth/height). If a trace needs to handle more current, then its trace width will have to be increased.</p>
+<p>Finally PCB manufacturing houses have things called design rules that they make available to their customers. These design rules usually include the minimum acceptable clearances required in a layout design. These tolerances exist because the equipment that fabricates PCB’s is only able to manufacture PCBs within prescribed dimensional tolerances. For example, a PCB manufacturing house can state as part of their design rules that the smallest distance/clearance between two copper traces must be 6mil. If the designer places two traces with a 4mil spacing between them, the PCB manufacturer will not be able to fabricate the board.</p>
+<p>The two units of measurements used to measure the dimensions of footprints, traces, clearances e.t.c are <strong>millimetres (mm)</strong> and <strong>mils</strong>. 1 mil is equivalent to a thousandths of an inch and is sometimes referred to as <strong>1 thou</strong>. In the past, the imperial unit mils used to be more popular in the PCB design and electronics world. This is why through-hole dual inline packages (DIP), a technology developed in the 70&rsquo;s, has a pitch (spacing between the pins) of 100 mils or 0.1”. This is also the spacing used between tie-points on a breadboard. And while the metric <strong>mm</strong> has become more dominant, the imperial <strong>mil</strong> is still in use.  As such, it is important to be able to convert between <strong>mils</strong> and <strong>mm</strong>.</p>
+<p>To convert from mil to mm:</p>
+$$ Val_{mm} = \frac{Val_{mil} \times 25.4}{1000} $$
+<p>To convert from mm to mil:</p>
+$$ Val_{mil} = \frac{Val_{mm} \times 1000}{25.4} $$
+<p>When placing moving components/traces, one must also be aware of the spacing being used by the KiCad PCB editor. The grid size can be changed via the dropdown menu shown in Figure 1. The grid units can also be changed via the icons in the left toolbar. In the grid size dropdown menu, you&rsquo;ll notice that the first 12 entries are in mils (whole numbers) whereas the last 10 entries measurements are in mm (whole numbers).</p>
+<p>The designer will want to alternate between finer and coarser grid settings during the layout process. When placing large components or drawing the PCB outline, use coarse grid setting like 10-50mil or 2.5-5mm. When placing smaller parts or laying out traces, the designer will want to switch to finer settings like 1-5 mils or 0.1-0.5mm. Custom grid sizes may also be set if needed.</p>
+<p>The cursor coordinates can be determined by looking at the bottom status bar. The X/Y coordinates are defined with respect to the top left corner of the white outline defining the work area. The second set of coordinates; dx/dy, are defined with respect to a user-defined/false origin. This false origin can be set anywhere in the work area simply by moving the cursor there and pressing <em>space bar</em>. The false origin will come in very handy when sizing the PCB outline.</p>
+<h3 id="import-netlist">Import Netlist.
+</h3><figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_02.png"
+    alt="Figure 2: Update from PCB" width="700px"><figcaption>
+      <p>Figure 2: Update from PCB</p>
+    </figcaption>
+</figure>
+
+<p>The next step is to import the netlist (design) created in the schematic editor into the layout editor. This is accomplished by pressing F8 or the icon shown in Figure 2 in the top toolbar. The <em>Update PCB from Schematic</em> dialog pops up as shown in Figure 3. Press the <em>Update PCB</em> button to see all the parts and the ratsnest connecting them.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_03.png"
+    alt="Figure 3: Update from PCB Dialog" width="700px"><figcaption>
+      <p>Figure 3: Update from PCB Dialog</p>
+    </figcaption>
+</figure>
+
+<p>Move the cursor to the top left corner of the layout editor&rsquo;s work area and leave them there for now.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_04.png"
+    alt="Figure 4: Component footprints" width="700px"><figcaption>
+      <p>Figure 4: Component footprints</p>
+    </figcaption>
+</figure>
+
+<h3 id="board-setup-and-establishing-the-design-rules">Board Setup and Establishing the Design Rules
+</h3><p>Before proceeding with the layout, let&rsquo;s have a look at the board setup. The <em>Board Setup</em> dialog can be accessed through the <em>File</em> Menu or green icon with red gear wheel in the top left corner (top toolbar).</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_05.png"
+    alt="Figure 5: Board Setup - Board Editor Layers" width="700px"><figcaption>
+      <p>Figure 5: Board Setup - Board Editor Layers</p>
+    </figcaption>
+</figure>
+
+<p>In the <em>Board Editor Layers</em> sub dialog, we can see all the different layers that we can access in the design.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_06.png"
+    alt="Figure 6: Board Setup - Physical Stackup" width="700px"><figcaption>
+      <p>Figure 6: Board Setup - Physical Stackup</p>
+    </figcaption>
+</figure>
+
+<p>In the <em>Physical Stackup</em> sub dialog we can select the number of layers in the board. Two is the default, and we will leave that as is. You would need to change this value if you want to build a 4-12 layer board.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_07.png"
+    alt="Figure 7: Board Setup - Constraints (Design Rules)" width="700px"><figcaption>
+      <p>Figure 7: Board Setup - Constraints (Design Rules)</p>
+    </figcaption>
+</figure>
+
+<p>In the <em>constraints</em> sub dialogs we have KiCad&rsquo;s default design rules. These can be modified to meet PCB manufacturing house requirements. The default rules are adequate for our purposes. So leave them as is for now.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_08.png"
+    alt="Figure 8: Board Setup - Pre-defined Sizes" width="700px"><figcaption>
+      <p>Figure 8: Board Setup - Pre-defined Sizes</p>
+    </figcaption>
+</figure>
+
+<p>In the <em>Pre-defined Sizes</em> sub dialog, custom trace widths and via dimensions can be specified. Let&rsquo;s add a custom trace size of 12 mils (0.3048mm) and custom vias  size of 30 mil (0.762mm) and hole of 15 mil (0.381mm). This will now show in the drop down menus beneath the top toolbar in the main KiCad layout editor window.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_09.png"
+    alt="Figure 9: Board Setup - Net Classes" width="700px"><figcaption>
+      <p>Figure 9: Board Setup - Net Classes</p>
+    </figcaption>
+</figure>
+
+<p>Finally,  in the <em>Net Classes</em> sub dialog, we can assign Nets (wires in our design) to Net classes with distinct trace widths. This will come in handy in future designs where we may want to have traces with different widths (to handle different currents; say <em>signal</em> and <em>power</em> net classes) in the same layout.</p>
+<p>Click <em>OK</em> to exit the dialog.</p>
+<h3 id="create-the-pcb-outline">Create the PCB Outline
+</h3><p>Just like in the schematic editor, the layout editor also has many hotkeys that you ought to familiarize yourself with. The hotkeys list can be accessed via Ctrl-F1 or through the <em>Help</em> menu.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_10.png"
+    alt="Figure 10: Board Edge Creation" width="700px"><figcaption>
+      <p>Figure 10: Board Edge Creation</p>
+    </figcaption>
+</figure>
+
+<p>To create a PCB outline:</p>
+<ul>
+<li>Select the <em>Edge.cuts</em> layer from the layer manager on the right hand side of the layout editor window.</li>
+<li>Set the Grid size to 5mm (coarsest metric settings) from the top drop-down menus</li>
+<li>Select the <em>Draw a Rectangle</em>  icon on the right toolbar.</li>
+<li>Move the cursor to a location to start drawing the a square 50mmx80mm PCB outline.</li>
+<li>Press spacebar to set the false origin to this same location</li>
+<li>Left click the mouse to start drawing the PCB outline and move down <strong>50mm</strong>, and right <strong>80mm</strong>, left click again to finish. Alternatively you can use the keyboard arrows to move the cursor. Press enter once to stop.</li>
+<li>Press the Escape button to get back to select mode.</li>
+</ul>
+<p>This will give us a rectangular board edge with sharp corners. Ideally we&rsquo;d like to convert these sharp corners to smoother, &lsquo;more round&rsquo; corners. To achieve this;</p>
+<ul>
+<li>Select the board edge and right click. A the context menu will pop-up.</li>
+<li>Choose <em>Shape Modification -&gt; Fille Lines</em>. A tiny <em>Fillet Lines</em> dialog will pop-up.</li>
+<li>Change the fillet radius to 5mm and press OK. The corners should now be round as shown in Figure 10.</li>
+</ul>
+<h3 id="placing-mounting-holes-and-components">Placing Mounting holes and Components
+</h3><p>Mounting holes should be included in all PCB designs. They also ought to be integrated in the PCB layout as early as possible.  Be sure to set the grid size to a finer setting; say 0.25mm.</p>
+<p>For this particular board, place one mounting hole close to each corner on the PCB outline as shown in Figure 11. Try to make the placement as symmetric as possible (use the grids!!).</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_11.png"
+    alt="Figure 11: Placing Mounting holes and Components" width="700px"><figcaption>
+      <p>Figure 11: Placing Mounting holes and Components</p>
+    </figcaption>
+</figure>
+
+<p>To place components on the board, simply move them over into the PCB outline area. Move all components excluding the battery holder into the PCB outline. You can use the context menu or the <em>m</em> hotkey. The battery holder will be placed last, since it will be mounted on to the bottom of the board. To achieve this, press the <em>f</em> hot key to flip it. Notice how the silkscreen switches colour from yellow (top silkscreen) to pink (bottom silkscreen)</p>
+<p>Parts placement is one of the most important steps in layout design. Putting some thought into how each component is placed relative to other components will help reduce routing conflicts and make the trace routing step (next step) much easier.</p>
+<p>If two components are connected directly to each other in the schematic, be sure to place them as closely as possible in the layout in a way that minimizes the criss-crossing of the ratsnest lines (white lines connecting footprints together…more on this in the next paragraph). One possible placement is shown in Figure 11.</p>
+<h3 id="add-two-ground-planes">Add Two Ground planes
+</h3><p>Printed circuit boards can have from 1 to more than 50 routing copper layers. I like to have a minimum of 2 layers for simpler designs like this one. Two layer boards allow the designer to route traces between components on the front copper layer (top side of the board) as well as the back copper layer (bottom side of the board). In fact, one can start a trace in one layer, use a via to switch over to the other layer and continue to draw the rest of the trace on this new layer!. But what do we do with all the board real estate on both layers that is not used by traces or vias?</p>
+<p>A ground plane is created by assigning all the unused copper fill (portions of copper fill not used for traces/pads/vias) on both top and bottom layers to the ground net. This has the following advantages:</p>
+<ul>
+<li>Reduces noise</li>
+<li>Improves signal integrity.</li>
+<li>Because the ground net is available almost everywhere on the board, ground trace routes may not be needed, reducing the complexity of the trace routing procedure.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_12.png"
+    alt="Figure 12: Assigning Ground Net to the top and bottom copper fills at once" width="700px"><figcaption>
+      <p>Figure 12: Assigning Ground Net to the top and bottom copper fills at once</p>
+    </figcaption>
+</figure>
+
+<p>In most 2 layer designs with traces, the goal is to route as many traces as possible on the top layer along with a top ground copper fill that covers the unused areas. Traces are routed on the bottom layer only when necessary, allowing as much as possible of the bottom layer to be utilized as a <em>contiguous</em> ground fill/net. Since our design is relatively simple, we should use only the front (top) layer for trace routing. And assign ground copper fills ( or planes) to both the back (bottom) layer, and the unused portions of the front layer.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_13.png"
+    alt="Figure 13: Copper Fills added successfully" width="700px"><figcaption>
+      <p>Figure 13: Copper Fills added successfully</p>
+    </figcaption>
+</figure>
+
+<p>To add a ground plane,</p>
+<ul>
+<li>Set the Grid size back to 5mm (coarsest metric settings) from the top drop-down menus</li>
+<li>Select the <em>Add a filled zone</em> icon from the right toolbar or use the hotkey Ctrl-Shift-Z.</li>
+<li>Place the cursor on the top left corner of the PCB outline and left click the mouse. You will be greeted with a <em>Copper Zone Properties</em> dialog.</li>
+<li>Be sure to select both the front copper (F.Cu) and bottom copper (B.Cu) layers and the GND net as shown in figure 13. Then press OK. Move the cursor to all four corners (follow the same path as that of the PCB outline) on the board to successfully place the ground plane.</li>
+</ul>
+<h3 id="route-traces">Route Traces
+</h3><p>The blue lines connecting the footprints to each other in Figure 13 are called the <strong>ratsnest</strong>. They indicate where the copper traces need to go to connect the components as per the schematic (netlist). This process is called <em>manual routing</em> when done by the PCB layout designer. Routing can also be done automatically (autorouting) by a computer algorithm, but in many cases the designer will want to route traces manually. To route these traces manually click the <strong>Route tracks</strong> icon from the left toolbar or use the <em>Shift+x</em> hotkey.</p>
+<p><strong>Always be sure to exit or enter pads (end routes) at the N, S, E and W points. Avoid diagonal routes leaving from or entering to the pads. Also avoid 90 degree turns in your routes.</strong></p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_14.png"
+    alt="Figure 14: Successfully routed traces" width="700px"><figcaption>
+      <p>Figure 14: Successfully routed traces</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>Set the Grid size back to 0.25-0.1mm.</li>
+<li>Route all tracks (matching the ratsnest) in front copper (F.Cu) only. This process can be tricky. Try doing it yourself and refer to figure 14 only if you need help. Notice that you will not need to route the ground traces as shown in Figure 14.</li>
+<li>Select the battery holder footprint, flip it (if not done so already) so that it&rsquo;s mounted on the bottom layer by using the &lsquo;f&rsquo; hotkey. Then place it as shown in figure 14. Route the traces attached to it. Again you will not need to route the ground net for now.</li>
+<li>Click on <em>Add a filled zone</em> icon again. Move the cursor inside the layout and right click. Go to <em>Zones-&gt;Fill All Zones</em> This will fill in the copper fill. The board should now look as shown in Figure 15.  If you make any modification to your board i.e. move a trace or part e.t.c., you&rsquo;ll have to repeat this step again. You can also turn OFF the zones by clicking on the <em>Show only zone boundaries</em> icon in the left toolbar.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_15.png"
+    alt="Figure 15: Copper fills filled" width="700px"><figcaption>
+      <p>Figure 15: Copper fills filled</p>
+    </figcaption>
+</figure>
+
+<p>Notice that the ground pins on the transistors and the battery holder are connected directly to the ground copper fills via spokes. These spokes are called &rsquo;thermal reliefs&rsquo;. It can be hard to get solder to reflow on pads that are directly connected to copper fills because the heat dissipates across the entire copper fill. Thermal reliefs allow us to have our cake and eat it too; i.e.provide a robust electrical connection from the pad to the copper fill, while preventing the heat needed for soldering from dissipating into the copper fill.</p>
+<h3 id="design-rule-check">Design Rule Check
+</h3><p>In order to verify that the PCB layout has so far respected the design rules, run a design rule check (DRC). This can be accomplished via Inspect-&gt;Design Rule Checker. This opens the DRC Control dialog. Then click on the Run DRC button shown in Figure @fig:18.</p>
+<p>Any problems listed under <em>Violations</em> must be rectified. Also the <em>Unconnected Items</em> should be zero, if its more than zero, this indicates that you forgot to route some of the traces.</p>
+<p>If the DRC passes without any problems and no unconnected nets, then congratulations! The layout is valid and almost complete!.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_16.png"
+    alt="Figure 16: Design Rule Check - No Errors!" width="700px"><figcaption>
+      <p>Figure 16: Design Rule Check - No Errors!</p>
+    </figcaption>
+</figure>
+
+<h3 id="add-text--logo">Add Text &amp; Logo
+</h3><p>To add text to the Front silkscreen, select the <em>Add a text item</em>  icon in the right toolbar <em>Ctrl+Shift+T</em> and left click in the layout area. In the resulting dialog, write in the Text field the text to be displayed on the board. Be sure to select the front silkscreen layer (F.SilkScreen) to write text in the front silkscreen layer. The text’s size and position can also be adjusted from the very same dialog. Once you are happy with the text, simply press the OK bottom and move the text to the appropriate location on the board.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_17.png"
+    alt="Figure 17: Add Text to front / top silkscreen" width="700px"><figcaption>
+      <p>Figure 17: Add Text to front / top silkscreen</p>
+    </figcaption>
+</figure>
+
+<p>Be sure to add your name and the name of the design on to the board. Also add ON/OFF labels for the switch positions as shown in Figure 18.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_18.png"
+    alt="Figure 18: Text added" width="700px"><figcaption>
+      <p>Figure 18: Text added</p>
+    </figcaption>
+</figure>
+
+<p>Adding a logo is a little bit more complicated.  KiCad can convert logo images into a footprint that can then be added to the footprint libraries. The complete process is listed below:</p>
+<ul>
+<li>First create three nested folders in your root folder <em>KiCadProj</em> called <em>myLibraries/myFootprints/logos.pretty</em>.
+<ul>
+<li>The <em>myLibraries</em> folder will contain all custom schematic symbol and layout footprint libraries that you may decide to create in the future.</li>
+<li>The <em>myFootprints</em> folder will contain all future custom layout footprint collections</li>
+<li>The <em>logos.pretty</em> is the folder that will contain all custom layout footprints that are logos. Notice that layout footprint collections must be placed into folders with a <em>.pretty</em> extension.</li>
+</ul>
+</li>
+<li>From the KiCad main window select <em>Image Converter</em>.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_19.jpg"
+    alt="Figure 19: Smiley- use this image as a logo" width="400px"><figcaption>
+      <p>Figure 19: Smiley- use this image as a logo</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>Choose a reasonable logo image that is sized around 256x256 pixels. Logos will show up better on the PCB if they are less complicated. Avoid photos. For the sake of this exercise, use the smiley logo shown in Figure 19.</li>
+<li>Once the <em>Image Converter</em> application opens, load the logo into the application through the <em>Load Source Image</em>  button.</li>
+<li>Be sure to set Format: to <em>Footprint(.kicad_mod file)</em> and <em>Board Layer for Outline</em> to <em>Front silk screen</em></li>
+<li>Set the <em>Size</em> to 20 by 13.3mm and the <em>Black/white threshold</em> to 70.</li>
+<li>Press the Export button and save the file as smiley.kicad_mod in the logos.pretty folder (Figure 21).</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_20.png"
+    alt="Figure 20: Import logo and convert it to footprint" width="700px"><figcaption>
+      <p>Figure 20: Import logo and convert it to footprint</p>
+    </figcaption>
+</figure>
+
+<p>The goal is to always have the image features be dark on a white background. If that’s not the case, experiment with the negative checkbox and the <em>Black/white threshold</em> slider.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_21.png"
+    alt="Figure 21: location of smiley.kicad_mod" width="700px"><figcaption>
+      <p>Figure 21: location of smiley.kicad_mod</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>In the PCB Editor, go to <em>Preferences-&gt;Manage Footprint Libraries</em></li>
+<li>Select the <em>Global Libraries</em> tab</li>
+<li>Press the <em>Add existing library to table button</em> (folder icon) and enter a name for this library and its library path as shown in Figure 22.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_22.png"
+    alt="Figure 22: Add logos footprint library path to KiCad" width="700px"><figcaption>
+      <p>Figure 22: Add logos footprint library path to KiCad</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>In the PCB ditor, select the Add Footprint icon (hotkey is <em>a</em>), then left click anywhere within the layout editor&rsquo;s grid area. This will open a <em>Choose Footprint</em> Dialog.</li>
+<li>In this dialog go to the logos library on the left-hand side and double click on the smiley footprint as illustrated in Figure 23.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_23.png"
+    alt="Figure 23:Footprint Library Browser" width="700px"><figcaption>
+      <p>Figure 23:Footprint Library Browser</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>Now place it in the PCB layout. You&rsquo;ll notice a <em>G</em>** * reference value is visible. If you select the logo and press the &lsquo;E&rsquo; hotkey (or right click -&gt; <em>Properties</em>), you can render the reference value invisible. The final layout with filled ground planes is shown in Figure 24.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_24.png"
+    alt="Figure 24: Final Layout" width="700px"><figcaption>
+      <p>Figure 24: Final Layout</p>
+    </figcaption>
+</figure>
+
+<p>KiCad&rsquo;s PCB Editor also comes with a 3D viewer. To access it, go to <em>View-&gt;3D Viewer</em>. Figure 25 illustrates what the board looks like in the 3D viewer.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_25.png"
+    alt="Figure 25: 3D view of Final Layout" width="700px"><figcaption>
+      <p>Figure 25: 3D view of Final Layout</p>
+    </figcaption>
+</figure>
+
+<h3 id="generate-gerber-files">Generate Gerber files
+</h3><p>In order to fabricate a PCB based on our layout , the layout’s Gerber files need to be generated. Gerber files contain information about the location and contents of each layer i.e. Front Copper, Front Silkscreen, Drill holes. e.t.c</p>
+<p>To generate the Gerber files:</p>
+<ul>
+<li>Create a directory called Gerber in your project directory</li>
+<li>Select <em>File-&gt;Plot</em> from the top menu.</li>
+<li>In the plot dialog be sure to select the 7 layers shown in Figure 26.
+<ul>
+<li>F.Cu (.gtl) -&gt; Front/Top Copper</li>
+<li>B.Cu (.gbl) -&gt; Bottom Copper</li>
+<li>F.Silkscreen (.gto) -&gt; Front/Top Silkscreen</li>
+<li>B.Silkscreen (.gbo) -&gt; Bottom Silkscreen</li>
+<li>F.Mask (.gts) -&gt; Front/Top Soldermask</li>
+<li>B.Mask (.gbs) -&gt; Bottom Soldermask</li>
+<li>Edge.cuts (.gm1) -&gt; Board Edge</li>
+</ul>
+</li>
+<li>Under Gerber options select <em>Use Protel filename extensions</em> as shown.</li>
+<li>Set the Output folder to <em>Gerbers</em> and press the <em>Plot</em> button. This will create all the necessary Gerber files (except the drill file) and place them in the <em>Gerbers</em> folder within the project folder.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_26.png"
+    alt="Figure 26: Plot Gerber files" width="700px"><figcaption>
+      <p>Figure 26: Plot Gerber files</p>
+    </figcaption>
+</figure>
+
+<p>To generate the drill(.drl) file:</p>
+<ul>
+<li>Press the <em>Generate Drill files…</em> button in the <em>Plot</em> dialog. This will open a new dialog called <em>Generate Drill Files</em>.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_27.png"
+    alt="Figure 27: Generate Drill file" width="700px"><figcaption>
+      <p>Figure 27: Generate Drill file</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>In this dialog, be sure to set the <em>Drill Units</em> to <em>Millimeters</em>.</li>
+<li>Under <em>Drill File Format</em>, select <em>Excellon</em> &amp; <em>PTH and NPTH holes in single file</em>.</li>
+<li>Be sure to set the Output folder to the path of the <em>Gerber</em> folder created earlier</li>
+<li>Press the <em>Generate Drill File button</em></li>
+<li>The <em>Gerbers</em> folder now holds all necessary files for fabrication!</li>
+<li>You can now view the Gerber files and drill file in the Gerber viewer accessible from the main KiCad window.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_28.png"
+    alt="Figure 28: Gerber Viewer" width="700px"><figcaption>
+      <p>Figure 28: Gerber Viewer</p>
+    </figcaption>
+</figure>
+
+<p>And that&rsquo;s it! Compress the <em>Gerbers</em> folder into a zip file and upload it onto your favorite PCB manufacturer website. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/kicad/">KiCAD</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PCB Layout Design with KiCad Part I: Introduction &amp; Schematic Capture</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Hussam Al-Hertani
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

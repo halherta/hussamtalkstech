@@ -2,10 +2,565 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>KiCAD on Hussam Talks Tech</title>
-        <link>https://hussamtalkstech.com/categories/kicad/</link>
+        <link>http://localhost:1313/categories/kicad/</link>
         <description>Recent content in KiCAD on Hussam Talks Tech</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <copyright>Hussam Al-Hertani</copyright><atom:link href="https://hussamtalkstech.com/categories/kicad/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>Hussam Al-Hertani</copyright>
+        <lastBuildDate>Wed, 17 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/kicad/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>PCB Layout Design with KiCAD Part II: Layout Creation</title>
+        <link>http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/</link>
+        <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/</guid>
+        <description>&lt;p&gt;In this blog entry, the PCB layout for the astable multivibrator circuit schematic design covered in &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/&#34; &gt;part I&lt;/a&gt;, will be created using the &lt;strong&gt;Kicad PCB Editor&lt;/strong&gt; application. Before proceeding however the user must be made aware of the two most common measurement units and how to convert between them.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_01.png&#34;
+    alt=&#34;Figure 1: KiCad PCB Editor. Grid settings and coordinates&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 1: KiCad PCB Editor. Grid settings and coordinates&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;importance-of-spatial-dimensions-and-units-of-measurements-for-pcb-design&#34;&gt;Importance of spatial dimensions and Units of measurements for PCB design
+&lt;/h3&gt;&lt;p&gt;Schematic capture is an abstract procedure and there’s no real need to keep in mind the dimensions of component symbols, wires nor the spacing between them. A schematic simply needs to be clean, readable and presentable.&lt;/p&gt;
+&lt;p&gt;On the otherhand, when laying out a PCB layout, the designer must be aware of the dimensions of the footprints, traces e.t.c for many reasons. For starters, a PCB layout has finite space defined by the PCB’s outline (board edge). This space must be sufficient to carry all the layout footprints and traces. The traces, which act like wires; need to be sized adequately to allow enough current to flow through them. For example, a trace with a width of 12mils can handle about 1A of current (assuming 1 \(\frac{oz}{ft^2}\) copper depth/height). If a trace needs to handle more current, then its trace width will have to be increased.&lt;/p&gt;
+&lt;p&gt;Finally PCB manufacturing houses have things called design rules that they make available to their customers. These design rules usually include the minimum acceptable clearances required in a layout design. These tolerances exist because the equipment that fabricates PCB’s is only able to manufacture PCBs within certain prescribed dimensional tolerances. For example, a PCB manufacturing house can state as part of their design rules that the smallest distance/clearance between two copper traces must be 6mil. If the designer places two traces with a 4mil spacing between them, the PCB manufacturer will not be able to fabricate the board.&lt;/p&gt;
+&lt;p&gt;The two units of measurements used to measure the dimensions of footprints, traces, clearances e.t.c are &lt;strong&gt;millimetres (mm)&lt;/strong&gt; and &lt;strong&gt;mils&lt;/strong&gt;. 1 mil is equivalent to a thousandths of an inch and is sometimes referred to as &lt;strong&gt;1 thou&lt;/strong&gt;. In the past, the imperial unit mils used to be more popular in the PCB design and electronics world. This is why through-hole dual inline packages (DIP), a technology developed in the 70&amp;rsquo;s, has a pitch (spacing between the pins) of 100 mils or 0.1”. This is also the spacing used between tie-points on a breadboard. And while the metric &lt;strong&gt;mm&lt;/strong&gt; has become more dominant, the imperial &lt;strong&gt;mil&lt;/strong&gt; is still in use.  As such, it is important to be able to convert between &lt;strong&gt;mils&lt;/strong&gt; and &lt;strong&gt;mm&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;To convert from mil to mm:&lt;/p&gt;
+$$ Val_{mm} = \frac{Val_{mil} \times 25.4}{1000} $$
+&lt;p&gt;To convert from mm to mil:&lt;/p&gt;
+$$ Val_{mil} = \frac{Val_{mm} \times 1000}{25.4} $$
+&lt;p&gt;When placing moving components/traces, one must also be aware of the spacing being used by the KiCad PCB editor. In the grid size can be changed via the dropdown menu shown in Figure 1. The grid units can also be changed via the icons in the left toolbar. In the grid size dropdown menu, you&amp;rsquo;ll notice that the first 12 entries are in mils (whole numbers) whereas the last 10 entries measurements are in mm (whole numbers).&lt;/p&gt;
+&lt;p&gt;The designer will want to alternate between finer and coarser grid settings during the layout process. When placing large components or drawing the PCB outline, use coarse grid setting like 10-50mil or 2.5-5mm. When placing smaller parts in the layout, the designer will want to switch to finer settings like 1-5 mils or 0.1-0.5mm. Custom grid sizes may also be set if needed.&lt;/p&gt;
+&lt;p&gt;The cursor coordinates can be determined by looking at the bottom status bar. The X/Y coordinates are defined with respect to the top left corner of the white outline defining the work area. The second set of coordinates; dx/dy, are defined with respect to a user-defined/false origin. This false origin can be set anywhere in the work area simply by moving the cursor there and pressing &lt;em&gt;space bar&lt;/em&gt;. The false origin will come in very handy when sizing the PCB outline.&lt;/p&gt;
+&lt;h3 id=&#34;import-netlist&#34;&gt;Import Netlist.
+&lt;/h3&gt;&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_02.png&#34;
+    alt=&#34;Figure 2: Update from PCB&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 2: Update from PCB&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The next step is to import the netlist (design) created in the schematic editor into the layout editor. This is accomplished by pressing F8 or the icon shown in Figure 2 in the top toolbar. The &lt;em&gt;Update PCB from Schematic&lt;/em&gt; dialog pops up as shown in Figure 3. Press the &lt;em&gt;Update PCB&lt;/em&gt; button to see all the parts and the rats nest connecting them&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_03.png&#34;
+    alt=&#34;Figure 3: Update from PCB Dialog&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 3: Update from PCB Dialog&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Move the cursor to the top left corner of the layout editor&amp;rsquo;s work area and leave them there for now.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_04.png&#34;
+    alt=&#34;Figure 4: Component footprints&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 4: Component footprints&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;board-setup-and-establishing-the-design-rules&#34;&gt;Board Setup and Establishing the Design Rules
+&lt;/h3&gt;&lt;p&gt;Before proceeding with the layout, let&amp;rsquo;s have a look at the board setup. The &lt;em&gt;Board Setup&lt;/em&gt; dialog can be accessed through the &lt;em&gt;File&lt;/em&gt; Menu or green icon with red gear wheel in the top left corner (top toolbar).&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_05.png&#34;
+    alt=&#34;Figure 5: Board Setup - Board Editor Layers&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 5: Board Setup - Board Editor Layers&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the &lt;em&gt;Board Editor Layers&lt;/em&gt; sub dialog, we can see all the different layers that we can access in the design.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_06.png&#34;
+    alt=&#34;Figure 6: Board Setup - Physical Stackup&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 6: Board Setup - Physical Stackup&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the &lt;em&gt;Physical Stackup&lt;/em&gt; sub dialog we can select the number of layers in the board. Two is the default, and we will leave that as is. You would need to change this value if you want to build a 4-12 layer board.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_07.png&#34;
+    alt=&#34;Figure 7: Board Setup - Constraints (Design Rules)&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 7: Board Setup - Constraints (Design Rules)&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the &lt;em&gt;constraints&lt;/em&gt; sub dialogs we have KiCad&amp;rsquo;s default design rules. These can be modified to meet PCB manufacturing house requirements. The default rules are adequate for our purposes. So leave them as is for now.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_08.png&#34;
+    alt=&#34;Figure 8: Board Setup - Pre-defined Sizes&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 8: Board Setup - Pre-defined Sizes&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the &lt;em&gt;Pre-defined Sizes&lt;/em&gt; sub dialog, pre-defined trace widths and via dimensions can be specified. Let&amp;rsquo;s add a pre-defined trace size of 12 mils (0.3048mm) and pre-defined Vias with a Size of 30 mil (0.762mm) and Hole 0f 15 mil (0.381mm). This will now show in the drop down menus beneath the top toolbar in the main KiCad layout editor window&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_09.png&#34;
+    alt=&#34;Figure 9: Board Setup - Net Classes&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 9: Board Setup - Net Classes&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Finally,  in the &lt;em&gt;Net Classes&lt;/em&gt; sub dialog, we can assign Nets (wires in our design) to Net classes with distinct trace widths. This will come in handy in future designs where we may want to have traces with different widths (to handle different currents; say &lt;em&gt;signal&lt;/em&gt; and &lt;em&gt;power&lt;/em&gt; net classes) in the same layout.&lt;/p&gt;
+&lt;p&gt;Click &lt;em&gt;OK&lt;/em&gt; to exit the dialog.&lt;/p&gt;
+&lt;h3 id=&#34;create-the-pcb-outline&#34;&gt;Create the PCB Outline
+&lt;/h3&gt;&lt;p&gt;Just like in the schematic editor, the layout editor also has many hotkeys that you ought to familiarize yourself with. The hotkeys list can be accessed via Ctrl-F1 or through the &lt;em&gt;Help&lt;/em&gt; menu.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_10.png&#34;
+    alt=&#34;Figure 10: Board Edge Creation&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 10: Board Edge Creation&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To create a PCB outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select the &lt;em&gt;Edge.cuts&lt;/em&gt; layer from the layer manager on the right hand side of the layout editor window.&lt;/li&gt;
+&lt;li&gt;Set the Grid size to 5mm (coarsest metric settings) from the top drop-down menus&lt;/li&gt;
+&lt;li&gt;Select the &lt;em&gt;Draw a Rectangle&lt;/em&gt;  icon on the right toolbar.&lt;/li&gt;
+&lt;li&gt;Move the cursor to a location to start drawing the a square 50mmx80mm PCB outline.&lt;/li&gt;
+&lt;li&gt;Press spacebar to set the false origin to this same location&lt;/li&gt;
+&lt;li&gt;Left click the mouse to start drawing the PCB outline and move down &lt;strong&gt;50mm&lt;/strong&gt;, and right &lt;strong&gt;80mm&lt;/strong&gt;, left click again to finish. Alternatively you can use the keyboard arrows to move the cursor. Press enter once to stop.&lt;/li&gt;
+&lt;li&gt;Press the Escape button to get back to select mode.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This will give us a rectangular board edge with sharp corners. Ideally we&amp;rsquo;d like to convert these sharp corners to smoother, &amp;lsquo;more round&amp;rsquo; corners. To achieve this;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select the board edge and right click. A the context menu will pop-up.&lt;/li&gt;
+&lt;li&gt;Choose &lt;em&gt;Shape Modification -&amp;gt; Fille Lines&lt;/em&gt;. A tiny &lt;em&gt;Fillet Lines&lt;/em&gt; dialog will pop-up.&lt;/li&gt;
+&lt;li&gt;Change the fillet radius to 5mm and press OK. The corners should now be round as shown in Figure 10.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;placing-mounting-holes-and-components&#34;&gt;Placing Mounting holes and Components
+&lt;/h3&gt;&lt;p&gt;Mounting holes should be included in all PCB designs. They also ought to be integrated in the PCB layout as early as possible.  Be sure to set the grid size to a finer setting; say 0.25mm.&lt;/p&gt;
+&lt;p&gt;For this particular board, place one mounting hole close to each corner on the PCB outline as shown in Figure 11. Try to make the placement as symmetric as possible (use the grids!!).&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_11.png&#34;
+    alt=&#34;Figure 11: Placing Mounting holes and Components&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 11: Placing Mounting holes and Components&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To place components on the board, simply move them over into the PCB outline area. Move all components excluding the battery holder into the PCB outline. You can use the context menu or the &lt;em&gt;m&lt;/em&gt; hotkey. The battery holder can then be placed last since it will be mounted on to the bottom of the board. To achieve this, press the &lt;em&gt;f&lt;/em&gt; hot key to flip it. Notice how the silkscreen switches colour from yellow (top silkscreen) to pink (bottom silkscreen)&lt;/p&gt;
+&lt;p&gt;Parts placement is one of the most important steps in layout design. Putting some thought into how each component is placed relative to other components will help reduce routing conflicts and make the trace routing step (next step) much easier.&lt;/p&gt;
+&lt;p&gt;If two components are connected directly to each other in the schematic, be sure to place them as closely as possible in the layout in a way that minimizes the criss-crossing of the ratsnest lines (white lines connecting footprints together…more on this in the next paragraph). One possible placement is shown in Figure 11.&lt;/p&gt;
+&lt;h3 id=&#34;add-two-ground-planes&#34;&gt;Add Two Ground planes
+&lt;/h3&gt;&lt;p&gt;Printed circuit boards can have from 1 to more than 50 routing copper layers. I like to have a minimum of 2 layers for simpler designs like this one. Two layer boards allow the designer to route traces between components on the front copper layer (top side of the board) as well as the back copper layer (bottom side of the board). In fact, one can start a trace in one layer, use a via to switch over to the other layer and continue to draw the rest of the trace on this new layer!. But what do we do with all the board real estate on both layers that is not used by traces or vias?&lt;/p&gt;
+&lt;p&gt;A ground plane is created by assigning all the unused copper fill (portions of copper fill not used for traces/pads/vias) on both top and bottom layers to the ground net. This has two advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It reduces noise and improves signal integrity.&lt;/li&gt;
+&lt;li&gt;Because the ground net is available almost everywhere on the board, ground trace routes may not be needed, reducing the complexity of the trace routing procedure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_12.png&#34;
+    alt=&#34;Figure 12: Assigning Ground Net to the top and bottom copper fills at once&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 12: Assigning Ground Net to the top and bottom copper fills at once&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In most 2 layer designs with traces, the goal is to route as many traces as possible on the top layer along with a top ground copper fill that covers the unused areas. Traces are routed on the bottom layer only when necessary, allowing as much as possible of the bottom layer to be utilized as a &lt;em&gt;contiguous&lt;/em&gt; ground fill/net. Since our design is relatively simple, we should use only the front (top) layer for trace routing. And assign ground copper fills ( or planes) to both the back (bottom) layer, and the unused portions of the front layer.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_13.png&#34;
+    alt=&#34;Figure 13: Copper Fills added successfully&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 13: Copper Fills added successfully&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To add a ground plane,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set the Grid size back to 5mm (coarsest metric settings) from the top drop-down menus&lt;/li&gt;
+&lt;li&gt;Select the &lt;em&gt;Add a filled zone&lt;/em&gt; icon from the right toolbar or use the hotkey Ctrl-Shift-Z.&lt;/li&gt;
+&lt;li&gt;Place the cursor on the top left corner of the PCB outline and left click the mouse. You will be greated with a &lt;em&gt;Copper Zone Properties&lt;/em&gt; dialog.&lt;/li&gt;
+&lt;li&gt;Be sure to select both the front copper (F.Cu) and bottom copper (B.Cu) layers and the GND net as shown in figure 13. Then press OK. Move the cursor to all four corners (follow the same path as that of the PCB outline) on the board to successfully place the ground plane.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;route-traces&#34;&gt;Route Traces
+&lt;/h3&gt;&lt;p&gt;The blue lines connecting the footprints to each other, that can be seen in Figure 13 are called the &lt;strong&gt;ratsnest&lt;/strong&gt;. They indicate where the copper traces need to go to connect the components as per the schematic (netlist). This process is called manual routing when done by the PCB layout designer. Routing can also be done automatically (autorouting) by a computer algorithm, but in many cases the designer will want to route traces manually. To route these traces manually click the &lt;strong&gt;Route tracks&lt;/strong&gt; icon from the left toolbar or use the &lt;em&gt;Shift+x&lt;/em&gt; hotkey.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Always be sure to exit or enter pads (end routes) at the N, S, E and W points. Avoid diagonal routes leaving from or entering to the pads. Also avoid 90 degree turns in your routes.&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_14.png&#34;
+    alt=&#34;Figure 14: Successfully routed traces&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 14: Successfully routed traces&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set the Grid size back to 0.25-0.1mm from the top drop-down menus&lt;/li&gt;
+&lt;li&gt;Route all tracks (matching the ratsnest) in front copper (F.Cu) only. This process can be tricky. Try doing it yourself and refer to figure 14 if you need help. Notice that you will not need to route the ground traces as shown in Figure 14.&lt;/li&gt;
+&lt;li&gt;select the battery holder footprint, flip it so that it&amp;rsquo;s mounted on the bottom layer by using the &amp;lsquo;f&amp;rsquo; hotkey. Then place it as shown in figure 14. Route the traces attached to it. Again you will not need to route the ground net for now.&lt;/li&gt;
+&lt;li&gt;Click on &lt;em&gt;Add a filled zone&lt;/em&gt; icon again. Move the cursor inside the layout and right click. Go to &lt;em&gt;Zones-&amp;gt;Fill All Zones&lt;/em&gt; This will fill in the copper fill. The board should now look as shown in Figure 15.  If you make any modification to your board i.e. move a trace or part e.t.c., you&amp;rsquo;ll have to repeat this step again. You can also turn OFF the zones by clicking on the &lt;em&gt;Show only zone boundaries&lt;/em&gt; icon in the left toolbar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_15.png&#34;
+    alt=&#34;Figure 15: Copper fills filled&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 15: Copper fills filled&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Notice that the ground pins on the transistors and the battery holder are connected directly to the ground copper fills via spokes. These spokes are called &amp;rsquo;thermal reliefs&amp;rsquo;. It can be hard to get solder to reflow on pads that are directly connected to copper fills because the heat dissipates across the entire copper fill. Thermal reliefs allow us to have our cake and eat it too; i.e.provide a robust electrical connection from the pad to the copper fill, while preventing the heat needed for soldering from dissipating into the copper fill.&lt;/p&gt;
+&lt;h3 id=&#34;design-rule-check&#34;&gt;Design Rule Check
+&lt;/h3&gt;&lt;p&gt;In order to verify that the PCB layout has so far respected the design rules, run a design rule check (DRC). This can be accomplished via Inspect-&amp;gt;Design Rule Checker. This opens the DRC Control dialog. Then click on the Run DRC button shown in Figure @fig:18.&lt;/p&gt;
+&lt;p&gt;Any problems listed under &lt;em&gt;Violations&lt;/em&gt; that must be rectified. Also the &lt;em&gt;Unconnected Items&lt;/em&gt; should be zero, if its more than zero, this indicates that you forgot to route some of the traces.&lt;/p&gt;
+&lt;p&gt;If the DRC passes without any problems and no unconnected nets then congratulations! The layout is valid and almost complete!.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_16.png&#34;
+    alt=&#34;Figure 16: Design Rule Check - No Errors!&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 16: Design Rule Check - No Errors!&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;add-text--logo&#34;&gt;Add Text &amp;amp; Logo
+&lt;/h3&gt;&lt;p&gt;To add text to the Front silkscreen, select the &lt;em&gt;Add a text item&lt;/em&gt;  icon in the right toolbar &lt;em&gt;Ctrl+Shift+T&lt;/em&gt; and left click in the layout area. In the resulting dialog write in the Text field the text to be displayed on the board. Be sure to select the front silkscreen layer (F.SilkS) to write text to the Front layer. The text’s size and position can also be adjusted from the very same dialog. Once you are happy with the text, simply press the OK bottom and move the text to the appropriate location on the board.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_17.png&#34;
+    alt=&#34;Figure 17: Add Text to front / top silkscreen&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 17: Add Text to front / top silkscreen&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Be sure to add your name and the name of the design on to the board. Also add ON/OFF labels for the switch positions as shown in Figure 18.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_18.png&#34;
+    alt=&#34;Figure 18: Text added&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 18: Text added&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Adding a logo is a little bit more complicated. Basically KiCAD will convert the logo into a footprint that can then be added to the footprint libraries. The complete process is listed below:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First create three nested folders in your root folder &lt;em&gt;KiCadProj&lt;/em&gt; called &lt;em&gt;myLibraries/myFootprints/logos.pretty&lt;/em&gt;.
+&lt;ul&gt;
+&lt;li&gt;The &lt;em&gt;myLibraries&lt;/em&gt; folder will contain all custom schematic symbol and layout footprint libraries that you may decide to create in the future.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;myFootprints&lt;/em&gt; folder will contain all future custom layout footprint collections&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;logos.pretty&lt;/em&gt; is the folder that will contain all custom layout footprints that are logos. Notice that layout footprint collections must be placed into a folder with a &lt;em&gt;.pretty&lt;/em&gt; extension.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;From the KiCad main window select &lt;em&gt;Image Converter&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_19.jpg&#34;
+    alt=&#34;Figure 19: Smiley- use this logo&#34; width=&#34;400px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 19: Smiley- use this logo&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Choose a reasonable logo image that is sized around 256x256 pixels. Logos will show up better on the PCB if they are less complicated. Avoid photos. For the sake of this exercise use the smiley logo shown in Figure 19.&lt;/li&gt;
+&lt;li&gt;Once the &lt;em&gt;Image Converter&lt;/em&gt; application opens, load the logo into the application through the &lt;em&gt;Load Source Image&lt;/em&gt;  button.&lt;/li&gt;
+&lt;li&gt;Be sure to set Format: to &lt;em&gt;Footprint(.kicad_mod file)&lt;/em&gt; and &lt;em&gt;Board Layer for Outline&lt;/em&gt; to &lt;em&gt;Front silk screen&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Set the &lt;em&gt;Size&lt;/em&gt; to 20 by 13.3mm and the &lt;em&gt;Black/white threshold&lt;/em&gt; to 70.&lt;/li&gt;
+&lt;li&gt;Press the Export button and save the file as smiley.kicad_mod in the logos.pretty folder (Figure 21).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_20.png&#34;
+    alt=&#34;Figure 20: Import logo and convert it to footprint&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 20: Import logo and convert it to footprint&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The goal is to always have the image features be dark on a white background. If that’s not the case, experiment with the negative checkbox and the &lt;em&gt;Black/white threshold&lt;/em&gt; slider.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_21.png&#34;
+    alt=&#34;Figure 21: location of smiley.kicad_mod&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 21: location of smiley.kicad_mod&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the PCB Editor, go to &lt;em&gt;Preferences-&amp;gt;Manage Footprint Libraries&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Select the &lt;em&gt;Global Libraries&lt;/em&gt; tab&lt;/li&gt;
+&lt;li&gt;Press the &lt;em&gt;Add existing library to table button&lt;/em&gt; (folder icon) and enter a name for this library and its library path as shown in Figure 22.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_22.png&#34;
+    alt=&#34;Figure 22: Add logos footprint library path to KiCAD&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 22: Add logos footprint library path to KiCAD&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the PCB ditor,  select the Add Footprint icon (hotkey is &lt;em&gt;a&lt;/em&gt;), then left click anywhere within the layout editor&amp;rsquo;s grid area. This will open a &lt;em&gt;Choose Footprint&lt;/em&gt; Dialog. - In this dialog go to the logos library on the left-hand side and double click on the smiley footprint as illustrated in Figure 23.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_23.png&#34;
+    alt=&#34;Figure 23:Footprint Library Browser&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 23:Footprint Library Browser&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Now place it in the PCB layout. You&amp;rsquo;ll notice a &lt;em&gt;G&lt;/em&gt;** * reference value is visible. If you select the logo and press the &amp;lsquo;E&amp;rsquo; hotkey (or right click -&amp;gt; &lt;em&gt;Properties&lt;/em&gt;), you can render the reference value invisible. The final layout with filled ground planes is shown in Figure 24.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_24.png&#34;
+    alt=&#34;Figure 24: Final Layout&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 24: Final Layout&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;KiCad&amp;rsquo;s PCB Editor also comes with a 3D viewer. To access it, go to &lt;em&gt;View-&amp;gt;3D Viewer&lt;/em&gt;. Figure 25 illustrates what the board looks like in the 3D viewer.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_25.png&#34;
+    alt=&#34;Figure 25: 3D view of Final Layout&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 25: 3D view of Final Layout&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&#34;generate-gerber-files&#34;&gt;Generate Gerber files
+&lt;/h3&gt;&lt;p&gt;In order to fabricate the completed layout, the layout’s Gerber files need to be generated. Gerber files contain information about the location and contents of each layer i.e. Front Copper, Front Silkscreen, Drill holes. e.t.c&lt;/p&gt;
+&lt;p&gt;To generate the Gerber files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a directory called Gerber in your project directory&lt;/li&gt;
+&lt;li&gt;Select &lt;em&gt;File-&amp;gt;Plot&lt;/em&gt; from the top menu.&lt;/li&gt;
+&lt;li&gt;In the plot dialog be sure to select the 7 layers shown in Figure 26.
+&lt;ul&gt;
+&lt;li&gt;F.Cu (.gtl) -&amp;gt; Front/Top Copper&lt;/li&gt;
+&lt;li&gt;B.Cu (.gbl) -&amp;gt; Bottom Copper&lt;/li&gt;
+&lt;li&gt;F.Silkscreen (.gto) -&amp;gt; Front/Top Silkscreen&lt;/li&gt;
+&lt;li&gt;B.Silkscreen (.gbo) -&amp;gt; Bottom Silkscreen&lt;/li&gt;
+&lt;li&gt;F.Mask (.gts) -&amp;gt; Front/Top Soldermask&lt;/li&gt;
+&lt;li&gt;B.Mask (.gbs) -&amp;gt; Bottom Soldermask&lt;/li&gt;
+&lt;li&gt;Edge.cuts (.gm1) -&amp;gt; Board Edge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Under Gerber options select &lt;em&gt;Use Protel filename extensions&lt;/em&gt; as shown.&lt;/li&gt;
+&lt;li&gt;Set the Output folder to &lt;em&gt;Gerbers&lt;/em&gt; and press the &lt;em&gt;Plot&lt;/em&gt; button. This will create all the necessary Gerber files except the drill file and place them in the &lt;em&gt;Gerbers&lt;/em&gt; folder within the project folder.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_26.png&#34;
+    alt=&#34;Figure 26: Plot Gerber files&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 26: Plot Gerber files&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To generate the drill(.drl) file:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Press the &lt;em&gt;Generate Drill files…&lt;/em&gt; button in the plot dialog. This will open a new dialog called &lt;em&gt;Generate Drill Files&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_27.png&#34;
+    alt=&#34;Figure 27: Generate Drill file&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 27: Generate Drill file&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In this dialog, be sure to set the &lt;em&gt;Drill Units&lt;/em&gt; to &lt;em&gt;Millimeters&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Under &lt;em&gt;Drill File Format&lt;/em&gt;, select &lt;em&gt;Excellon&lt;/em&gt; &amp;amp; &lt;em&gt;PTH and NPTH holes in single file&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Set &lt;em&gt;Drill Units&lt;/em&gt; to Millimeters.&lt;/li&gt;
+&lt;li&gt;Be sure to set the Output folder to the path of the &lt;em&gt;Gerber&lt;/em&gt; folder created earlier&lt;/li&gt;
+&lt;li&gt;Press the &lt;em&gt;Generate Drill File button&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;The Gerber folder now holds all necessary files for fabrication!&lt;/li&gt;
+&lt;li&gt;You can now view the Gerber files and drill file in the Gerber viewer accessible from the main KiCad window.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/img/img02_28.png&#34;
+    alt=&#34;Figure 28: Gerber Viewer&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 28: Gerber Viewer&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;And that&amp;rsquo;s it! Compress the &lt;em&gt;Gerbers&lt;/em&gt; folder into a zip file and upload it onto your favorite PCB manufacturer website. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>PCB Layout Design with KiCad Part I: Introduction &amp; Schematic Capture</title>
+        <link>http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/</link>
+        <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/</guid>
+        <description>&lt;p&gt;In this blog entry, I will introduce the printed circuit board (PCB) design flow. I will then proceed to focus on the schematic capture section of the PCB design flow by using the &lt;a class=&#34;link&#34; href=&#34;http://www.kicad-pcb.org&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;KiCad PCB design tool&lt;/a&gt; to create a schematic for a simple LED blinker circuit. The PCB layout section of the design flow will be covered in a later blog entry.&lt;/p&gt;
+&lt;h2 id=&#34;pcb-design-flow&#34;&gt;PCB Design Flow
+&lt;/h2&gt;&lt;p&gt;The PCB design flow is illustrated in Figure 1. It can be broken into two major steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Schematic Creation: This is where the circuit schematic will be ‘captured’ by the PCB design tool.&lt;/li&gt;
+&lt;li&gt;Layout Creation: This is where the circuit schematic will be turned into a PCB layout containing matching footprints for the various components in the circuit, and traces representing the wires/nets connecting these components.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_01.png&#34;
+    alt=&#34;Figure 1: PCB Design Flow&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 1: PCB Design Flow&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Each one of these steps can be broken down into further smaller steps.&lt;/p&gt;
+&lt;h3 id=&#34;schematic-creation-overview&#34;&gt;Schematic Creation Overview
+&lt;/h3&gt;&lt;p&gt;A circuit schematic is an illustrative diagram demonstrating how a variety of electrical/electronic components represented by schematic symbols, are &lt;em&gt;wired&lt;/em&gt; / connected together.&lt;/p&gt;
+&lt;p&gt;Here the designer inputs the schematic into KiCad’s schematic capture (editor) tool. If one or more components in the circuit is not available in the schematic symbols library, the designer must create a new schematic symbol and add it to the schematic. The procedure for schematic symbol creation is beyond the scope of this tutorial. It may be covered in a future blog entry&lt;/p&gt;
+&lt;p&gt;Once the schematic is completed and verified, a footprint assignment tool is then used to assign every &lt;strong&gt;schematic symbol&lt;/strong&gt; in the schematic to a &lt;strong&gt;layout footprint&lt;/strong&gt;. If one or more components (schematic symbols) in the design have no valid footprint(s) in the footprint library, the designer must create a suitable footprint, and map it to its appropriate schematic symbol. The procedure for layout footprint creation is yet again outside the scope of this tutorial and may be covered in a future blog entry.&lt;/p&gt;
+&lt;p&gt;At this point, the user can generate the &lt;strong&gt;bill of materials (BOM)&lt;/strong&gt; list containing a list of all the components required by the schematic, and generate the &lt;strong&gt;schematic netlist&lt;/strong&gt;. The schematic netlist is simply a file that textually describes all the components and the interconnections / wiring between them as illustrated in the schematic.&lt;/p&gt;
+&lt;h3 id=&#34;layout-creation-overview&#34;&gt;Layout Creation Overview
+&lt;/h3&gt;&lt;p&gt;Here the designer will first open KiCad’s PCB / layout editor tool, and set the appropriate design rules for the layout. The design rules are determined by the PCB manufacturer and ensure that the KiCad layout design meets the specifications required for successful fabrication.&lt;/p&gt;
+&lt;p&gt;The designer will then import the schematic &lt;em&gt;netlist&lt;/em&gt; into the layout editor tool and create the PCB’s outline via the ‘Edge.Cuts’ (board edge) layer. Copper fills / pours for ground planes and other zones are then allocated within the PCB outline.&lt;/p&gt;
+&lt;p&gt;Next, all component footprints are &lt;em&gt;placed&lt;/em&gt; within the PCB outline and the traces between the components are routed (as per the wires/nets in the schematic). Once the layout is complete, the designer will perform a design rule check (DRC) to ensure that the layout meets all the design rules and can indeed be fabricated by the PCB manufacturing house. The final step is to generate the layout&amp;rsquo;s Gerber files and send them to the PCB manufacturing house for fabrication.&lt;/p&gt;
+&lt;h2 id=&#34;schematic-symbol-vs-layout-footprint&#34;&gt;Schematic Symbol vs Layout Footprint
+&lt;/h2&gt;&lt;p&gt;Schematic symbols denote the schematic representation of a component. For example the schematic symbol of a resistor is shown in Figure 2. Note that because a schematic symbol is an &lt;strong&gt;abstract illustration&lt;/strong&gt; representing a component, it&amp;rsquo;s exact size, placement and dimensions matters in so far as to ensure that the schematic is clear, uncluttered and legible. The size &amp;amp; position of the schematic symbol does not translate into the physical world.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_02.png&#34;
+    alt=&#34;Figure 2: Resistor schematic symbol&#34; width=&#34;400px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 2: Resistor schematic symbol&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Layout footprints on the other hand are just that, the footprint representation that will be &amp;lsquo;printed on &amp;amp; drilled into&amp;rsquo; the printed circuit board.  Layout footprints typically consists of a silkscreen portion outlining the size and shape of the component to be placed, and copper through hole / surface mount pads that connect the components pins to the traces on the PCB.&lt;/p&gt;
+&lt;p&gt;The dimensions of the layout footprint must match the dimensions of the component that it represents, since the component will be placed onto its layout footprint in the physical world. The placement of the footprint must also be well thought out. Figure 3 illustrates a matching layout footprint for the resistor schematic symbol in Figure 2.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_03.png&#34;
+    alt=&#34;Figure 3: Resistor layout footprint&#34; width=&#34;400px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 3: Resistor layout footprint&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&#34;introduction-to-kicad&#34;&gt;Introduction to KiCad
+&lt;/h2&gt;&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_04.png&#34;
+    alt=&#34;Figure 4: Main KiCad window&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 4: Main KiCad window&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;When the KiCad application runs, the first thing the user sees is the main KiCad window, From this window, a variety of tools can be accessed including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Schematic editor - used for schematic capture&lt;/li&gt;
+&lt;li&gt;Symbol (Schematic) editor - used to edit existing schematic symbols and create new ones&lt;/li&gt;
+&lt;li&gt;PCB layout editor - used for PCB layout design&lt;/li&gt;
+&lt;li&gt;Footprint  editor - used to edit existing layout footprints and create new ones&lt;/li&gt;
+&lt;li&gt;Gerber viewer - used to inspect Gerber files&lt;/li&gt;
+&lt;li&gt;Image Converter - used for creating logos from bitmap images among other things&lt;/li&gt;
+&lt;li&gt;Calculator tools - used for various calculations i.e. calculate current capacity of a trace&lt;/li&gt;
+&lt;li&gt;Drawing sheet editor - edit drawing sheet borders and title blocks for use in schematics and PCB designs&lt;/li&gt;
+&lt;li&gt;Plugin and content Manager - Manage downloadable packages from KiCad and 3rd party repositories.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;creating-a-new-project&#34;&gt;Creating a New Project
+&lt;/h3&gt;&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_05.png&#34;
+    alt=&#34;Figure 5: Create a new project&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 5: Create a new project&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Create a new root directory where all KiCad projects will be saved. Call this directory &lt;em&gt;KiCadProj&lt;/em&gt; or some other relevant name,&lt;/p&gt;
+&lt;p&gt;In KiCad goto &lt;em&gt;File-&amp;gt;New Project&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Create a new project called &lt;em&gt;led_blinky&lt;/em&gt; and save it in the &lt;em&gt;KiCadProj&lt;/em&gt; directory. This will automatically create a folder name &lt;em&gt;led_blinky&lt;/em&gt; under the &lt;em&gt;KiCadProj&lt;/em&gt; directory and create a &lt;strong&gt;.kicad_pro&lt;/strong&gt; project file in it. All other files related to this project i.e. schematic, layout, netlist e.t.c. will be saved into this folder.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_06.png&#34;
+    alt=&#34;Figure 6: Project Created&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 6: Project Created&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&#34;the-astable-multivibrator-circuit&#34;&gt;The Astable Multivibrator Circuit
+&lt;/h4&gt;&lt;p&gt;The transistor based &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Multivibrator&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;astable multivibrator&lt;/a&gt; circuit shown in the schematic below is a simple square wave oscillator. It generates two square waves that exhibit a 180 degree phase shift. For more on the theory behind this circuit’s operation, the curious reader can go &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Multivibrator#Operation&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_07.png&#34;
+    alt=&#34;Figure 7: Astable Multivibrator Circuit&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 7: Astable Multivibrator Circuit&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Connecting LED’s to the collector of each transistor turns the circuit into an LED flasher. The frequency of oscillation is a function of the values of R2, R3, C1 &amp;amp; C2 and is approximately equal to :&lt;/p&gt;
+$$f = \frac{1}{ln(2) \times (R_2C_1 + R_3C_2)}$$
+&lt;p&gt;Assuming that \(R_2 = R_3 = R \) and \(C_1 = C_2 = C \), the frequency of oscillation becomes,&lt;/p&gt;
+$$f = \frac{1}{ln(2) \times RC }$$
+&lt;h3 id=&#34;schematic-capture&#34;&gt;Schematic Capture
+&lt;/h3&gt;&lt;p&gt;Let&amp;rsquo;s start with the schematic editor from the KiCad main window. Before going any further, it is important to familiarize yourself with the hotkeys available within KiCad. It might not seem necessary, but it is well worth your time to memorize the hotkeys for some of the more commonly used actions.  To get the list, go to &lt;em&gt;Help-&amp;gt;List Hotkeys&lt;/em&gt; or press &lt;em&gt;Ctrl-F1&lt;/em&gt; and look under the &lt;strong&gt;Schematic Editor&lt;/strong&gt; listview. Things that can be done easily with hotkeys in the schematic editor are listed below:&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_08.png&#34;
+    alt=&#34;Figure 8: KiCad Schematic Editor Hotkeys&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 8: KiCad Schematic Editor Hotkeys&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;e - Edit properties of a component&lt;/li&gt;
+&lt;li&gt;m - Move a component&lt;/li&gt;
+&lt;li&gt;ctrl+D - Duplicate (Copy) a component&lt;/li&gt;
+&lt;li&gt;r - Rotate a component&lt;/li&gt;
+&lt;li&gt;x - Mirror a component along the X axis&lt;/li&gt;
+&lt;li&gt;y - Mirror a component along the Y axis&lt;/li&gt;
+&lt;li&gt;a - Add a component&lt;/li&gt;
+&lt;li&gt;t - Add Schematic text&lt;/li&gt;
+&lt;li&gt;Delete - Delete a component&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using these shortcuts/hotkeys will make working with KiCad much faster and efficient.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_09.png&#34;
+    alt=&#34;Figure 9: Edit Page Settings&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 9: Edit Page Settings&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;To fill in the legend in the bottom left hand corner, go to &lt;em&gt;File-&amp;gt;Page Settings&lt;/em&gt; , and fill in the various details i.e. revision number, date, title e.t.c. The page size and orientation can also be changed from the Page Settings dialog.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_10.png&#34;
+    alt=&#34;Figure 10: Updated Legend&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 10: Updated Legend&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Once you are done with the page settings,the legend will be updated as shown in Figure 10.&lt;/p&gt;
+&lt;p&gt;To quickly zoom in and out of the schematic area one can use the mouses scroll wheel. Alternatively, you can also use the zoom icons in the center of the top toolbar.&lt;/p&gt;
+&lt;p&gt;Now we add the components to the schematic! To add components, use the shortcut ‘a’ or click on the op-amp icon (triangular three pin component with a ‘+’ and ‘-’ signs on its inputs) in the top righthand corner. The following schematic symbols will be needed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Two NPN transistors.&lt;strong&gt;2N3904&lt;/strong&gt; should be fine.&lt;/li&gt;
+&lt;li&gt;Four Resistors. Select Component &lt;strong&gt;R_Small_US&lt;/strong&gt;. R, R_US and R_Small can also be used.&lt;/li&gt;
+&lt;li&gt;Two Capacitors. Select Component &lt;strong&gt;C_Polarized_Small_US&lt;/strong&gt;. Any capacitor symbol with polarity will work, since this circuit utilizes polarized electrolytic capacitors.&lt;/li&gt;
+&lt;li&gt;Two Light emitting diodes (LED)s. Select component &lt;strong&gt;LED&lt;/strong&gt;. LED_Small can also be used.&lt;/li&gt;
+&lt;li&gt;A power symbol. Select Component &lt;strong&gt;Battery&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;A ground symbol. Select Component &lt;strong&gt;GND&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Four mounting holes. Select Component &lt;strong&gt;MountingHole&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;An SPDT (single pole double throw) switch &lt;strong&gt;SW_SPDT&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once these components are added to the schematic, use hotkeys to copy (c), move(m), delete(Delete), edit part values(e), rotate (r) and/or mirror(x/y) these components as needed. You can also right click on the component and a context menu will pop up giving you similar functionality. The hotkeys will make things go faster however.&lt;/p&gt;
+&lt;p&gt;Once all the parts are placed, connect them with wires. To start a wire you can use the hotkey (w) or click on the diagonal  blue wire icon (&lt;em&gt;Add a Wire&lt;/em&gt;) on the right toolbar. By default all wires are straight. To draw the diagonal wires, you’ll have to click on the &lt;em&gt;Switch H &amp;amp; V only mode for new wires and buses&lt;/em&gt; icon. It is located on the left toolbar and has a small picture of two lines cutting each other at a 90 degree angle. Alternatively, you can use the &lt;em&gt;Shift+Space&lt;/em&gt; shortcut.&lt;/p&gt;
+&lt;p&gt;Additionally, make sure you add a &lt;em&gt;no connect flag&lt;/em&gt; to pin 3 of the SPDT switch (as shown in the figure below). This can be accomplished with the hotkey &lt;em&gt;Q&lt;/em&gt; or by selecting the &amp;lsquo;x&amp;rsquo; icon in the right toolbar.&lt;/p&gt;
+&lt;p&gt;Once completed, the schematic should look similar the one in Figure 11. Make sure that all components are assigned the correct values.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_11.png&#34;
+    alt=&#34;Figure 11: Completed schematic&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 11: Completed schematic&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&#34;component-annotation-and-the-electrical-rule-check-erc&#34;&gt;Component Annotation and the Electrical Rule Check (ERC)
+&lt;/h4&gt;&lt;p&gt;Notice that each symbol come with two textual descriptions;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a &lt;strong&gt;reference&lt;/strong&gt; such as &lt;em&gt;R1&lt;/em&gt;, &lt;em&gt;R2&lt;/em&gt;, &lt;em&gt;C1&lt;/em&gt;, &lt;em&gt;Q1&lt;/em&gt;, &lt;em&gt;D2&lt;/em&gt;, &lt;em&gt;SW1&lt;/em&gt;, &lt;em&gt;BT1&lt;/em&gt; e.t.c, and a&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt; such as &lt;em&gt;SW-SPDT&lt;/em&gt; or &lt;em&gt;LED&lt;/em&gt;. Notice that for passive components, the &lt;em&gt;name&lt;/em&gt; field ends up being set to their component values i.e. &lt;em&gt;330&lt;/em&gt;, &lt;em&gt;10u&lt;/em&gt; e.t.c.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Both fields can be modified by selecting the symbol in question and then either &lt;em&gt;right click-&amp;gt;Properties&lt;/em&gt; or pressing the &amp;lsquo;E&amp;rsquo; hotkey. It is important that each symbol in the schematic has a valid and &lt;strong&gt;unique&lt;/strong&gt; reference value. This is because each symbol is represented in the netlist via its reference value. For example you cannot have two resistors with the same reference number &lt;em&gt;R1&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The process of giving each component a unique reference value is known as &lt;strong&gt;Component Annotation&lt;/strong&gt;. The KiCad schematic editor performs annotation for us automatically so you should not have to worry about it. Note that the reference value for each symbol consists of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a reference designator (R for resistors, C for capacitors e.t.c.), and a&lt;/li&gt;
+&lt;li&gt;unique number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Different symbols get different reference designators. A list of reference designators is provided below:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Resistor - &lt;strong&gt;R&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Capacitor - &lt;strong&gt;C&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Inductor - &lt;strong&gt;L&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Diode - &lt;strong&gt;D&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Transistor - &lt;strong&gt;Q&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Integrated circuit (I.C.) - &lt;strong&gt;U&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Connector - &lt;strong&gt;J&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Switch - &lt;strong&gt;SW&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Battery - &lt;strong&gt;BT&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Mounting Hole - &lt;strong&gt;H&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Add the &lt;strong&gt;PWR_FLAG&lt;/strong&gt; symbol to both the VCC (power) and GND components/symbols. The reason for this will be explained shortly. The schematic should now look similar to that shown in Figure 12.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_12.png&#34;
+    alt=&#34;Figure 12: Completed Schematic with PWR_FLAG&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 12: Completed Schematic with PWR_FLAG&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The KiCad schematic editor has a built-in Electrical Rule Check (ERC). The ERC ensures that the schematic is electrically sound and that power nets (wires) are connected to an appropriate single power driver. It also highlights floating pins e.t.c.&lt;/p&gt;
+&lt;p&gt;In order to run &amp;amp; pass the ERC, the current circuit needs to have a single power driver net. In our schematic that would be the VCC net. To facilitate this, attach a &lt;strong&gt;PWR_FLAG&lt;/strong&gt; symbol to both the VCC (power source) and GND (power sink) symbols.  Since this was already done, proceed to running the ERC check by clicking on the &lt;strong&gt;Perform Electrical Rules Check&lt;/strong&gt;  (checklist) icon in the top toolbar as shown in the figure below. If everything is OK, the ERC should pass successfully with no violations.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_13.png&#34;
+    alt=&#34;Figure 13: ERC Passed!&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 13: ERC Passed!&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&#34;assign-footprints-to-schematic-symbols&#34;&gt;Assign Footprints to Schematic Symbols
+&lt;/h4&gt;&lt;p&gt;So far the schematic has been captured and an ERC was successfully passed. The next step is to assign a layout footprint to each schematic symbol. This is necessary to prepare our design for layout. Click on the &lt;em&gt;Assign Footprints&lt;/em&gt; icon (containing a schematic symbol of an operation amplifier and an integraed circuit footprint linked) on the top toolbar. This should open the &lt;em&gt;Assign footprints&lt;/em&gt; dialog shown in Figure 14.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_14.png&#34;
+    alt=&#34;Figure 14: Assign footprints dialog with All Symbols assigned&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 14: Assign footprints dialog with All Symbols assigned&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the &lt;em&gt;Assign Footprints&lt;/em&gt; dialog the designer needs to assign the layout footprints in the rightmost column to the schematic symbols (with reference values) in centre column. Notice that the leftmost column has a list of the KiCad&amp;rsquo;s builtin layout footprint libraries.&lt;/p&gt;
+&lt;p&gt;The goal here is to match our schematic symbols (centre column) with appropriate layout footprints in the rightmost column. To help us achieve this goal, several filter icons are available that facilitate filtering through all the available footprints by keyword, pin count, library or search pattern.&lt;/p&gt;
+&lt;p&gt;For example, assume that the design needs a AAA battery connector with two pins (power and ground), to do this one can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;turn on the filter footprint by library and select the ‘Battery’ library from the leftmost column,&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;turn on the filter footprint by pin count, which will automatically look for all footprints with a pin count of two (same as that of the BT1 schematic symbol)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;turn on the filter footprint by search keyword or pattern and type in the adjacent text box AAA, which helps homing in on all footprints with ‘AAA’ in their names.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_15.png&#34;
+    alt=&#34;Figure 15: Assigned battery holder footprint&#34; width=&#34;700px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 15: Assigned battery holder footprint&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This should leave us with three options. Select the &lt;em&gt;Battery:BatteryHolder_Keystone_2479_3xAAA&lt;/em&gt; footprint by clicking on it. Notice how its assigned to the BT1 schematic symbol in the centre column in Figure 14.&lt;/p&gt;
+&lt;p&gt;The actual footprint can be inspected by clicking on the &lt;em&gt;View the selected footprint in the footprint viewer&lt;/em&gt; icon (IC with magnifying glass). Many of the footprints built into KiCad have part-names and/or additional dimensions information embedded in their KiCad footprint names, making it easier to search for those parts on Electronic part distributor websites like &lt;a class=&#34;link&#34; href=&#34;https://www.digikey.ca&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Digikey&lt;/a&gt; or &lt;a class=&#34;link&#34; href=&#34;https://ca.mouser.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Mouser&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In a similar manner, associate the remaining schematic symbols to the following footprints:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;BT1 - Battery:BatteryHolder_Keystone_2479_3xAAA&lt;/li&gt;
+&lt;li&gt;C1,C2 - Capacitor_THT:CP_Radial_D6.3mm_P2.50mm&lt;/li&gt;
+&lt;li&gt;D1,D2 - LED_THT:LED_D5.0mm&lt;/li&gt;
+&lt;li&gt;H1-H4 - MountingHole:MountingHole_3.2mm_M3&lt;/li&gt;
+&lt;li&gt;Q1,Q2 - 2N3904:Package_TO_SOT_THT:TO-92_Inline&lt;/li&gt;
+&lt;li&gt;R1-R4 - Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal&lt;/li&gt;
+&lt;li&gt;SW1   - Button_Switch_THT:SW_E-Switch_EG1224_SPDT_Angled&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now click on the &lt;em&gt;Apply, Save Schematic &amp;amp; Continue&lt;/em&gt; button, then the OK button.&lt;/p&gt;
+&lt;p&gt;Congratulations! You have completed the schematic capture process and are now ready to layout the board. This will be covered in a future blog entry.&lt;/p&gt;
+</description>
+        </item>
+        
     </channel>
 </rss>

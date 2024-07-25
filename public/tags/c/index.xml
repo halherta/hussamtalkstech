@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>C on Hussam Talks Tech</title>
-        <link>https://hussamtalkstech.com/tags/c/</link>
+        <link>http://localhost:1313/tags/c/</link>
         <description>Recent content in C on Hussam Talks Tech</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
-        <lastBuildDate>Sun, 02 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hussamtalkstech.com/tags/c/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/c/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Bit Manipulation in C Part I - Bit Manipulation Basics</title>
-        <link>https://hussamtalkstech.com/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/</link>
+        <link>http://localhost:1313/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://hussamtalkstech.com/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/</guid>
+        <guid>http://localhost:1313/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/</guid>
         <description>&lt;p&gt;The topic of bit manipulation in C doesn&amp;rsquo;t seem to get as much attention
 in many C programming books and study guides. Perhaps because it&amp;rsquo;s a not
 used regularly by application developers and system programmers.&lt;/p&gt;
@@ -326,16 +326,16 @@ covered in the next article in this series.&lt;/p&gt;
         </item>
         <item>
         <title>Bit Manipulation in C Part II - Read Modify Write Operations</title>
-        <link>https://hussamtalkstech.com/p/bit-manipulation-in-c-part-ii-read-modify-write-operations/</link>
+        <link>http://localhost:1313/p/bit-manipulation-in-c-part-ii-read-modify-write-operations/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://hussamtalkstech.com/p/bit-manipulation-in-c-part-ii-read-modify-write-operations/</guid>
+        <guid>http://localhost:1313/p/bit-manipulation-in-c-part-ii-read-modify-write-operations/</guid>
         <description>&lt;p&gt;This article covers Read Modify Write (RMW) operations. These operations
 allow the programmer to manipulate one or more bits of interest within a
 variable (or register), without affecting the state of the rest of the
 bits in the that variable (or register). In order to understand RMW
 operations, the reader must have a solid foundation in bit manipulation.
-Bit manipulation basics were covered in the &lt;a class=&#34;link&#34; href=&#34;https://hussamtalkstech.com/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/&#34; &gt;Bit Manipulation in C Part 1 - Bit Manipulation basics&lt;/a&gt;
+Bit manipulation basics were covered in the &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/bit-manipulation-in-c-part-i-bit-manipulation-basics/&#34; &gt;Bit Manipulation in C Part 1 - Bit Manipulation basics&lt;/a&gt;
 blog entry.&lt;/p&gt;
 &lt;p&gt;There are four main RMW operations:&lt;/p&gt;
 &lt;ul&gt;

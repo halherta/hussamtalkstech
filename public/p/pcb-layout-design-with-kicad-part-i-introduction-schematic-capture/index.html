@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Introductory KiCad tutorial">
+<title>PCB Layout Design with KiCad Part I: Introduction &amp; Schematic Capture</title>
+
+<link rel='canonical' href='http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/'>
+
+<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="PCB Layout Design with KiCad Part I: Introduction & Schematic Capture">
+<meta property='og:description' content="Introductory KiCad tutorial">
+<meta property='og:url' content='http://localhost:1313/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/'>
+<meta property='og:site_name' content='Hussam Talks Tech'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='KiCAD' /><meta property='article:published_time' content='2024-07-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-07-10T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="PCB Layout Design with KiCad Part I: Introduction & Schematic Capture">
+<meta name="twitter:description" content="Introductory KiCad tutorial">
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hua084da78196c2fd09413e27ac571b6a4_468446_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hussam Talks Tech</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/halherta'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/kicad/" style="background-color: #2a9d8f; color: #fff;">
+                KiCAD
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/">PCB Layout Design with KiCad Part I: Introduction &amp; Schematic Capture</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Introductory KiCad tutorial
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 10, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    13 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>In this blog entry, I will introduce the printed circuit board (PCB) design flow. I will then proceed to focus on the schematic capture section of the PCB design flow by using the <a class="link" href="http://www.kicad-pcb.org"  target="_blank" rel="noopener"
+    >KiCad PCB design tool</a> to create a schematic for a simple LED blinker circuit. The PCB layout section of the design flow is covered in <a class="link" href="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/" >this</a> blog entry.</p>
+<h2 id="pcb-design-flow">PCB Design Flow
+</h2><p>The PCB design flow is illustrated in Figure 1. It can be broken into two major steps:</p>
+<ul>
+<li>Schematic Creation: This is where the circuit schematic will be ‘captured’ by the PCB design tool.</li>
+<li>Layout Creation: This is where the circuit schematic will be turned into a PCB layout containing matching footprints for the various components in the circuit, and traces representing the wires/nets connecting these components.</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_01.png"
+    alt="Figure 1: PCB Design Flow" width="700px"><figcaption>
+      <p>Figure 1: PCB Design Flow</p>
+    </figcaption>
+</figure>
+
+<p>Each one of these steps can be broken down into further smaller steps.</p>
+<h3 id="schematic-creation-overview">Schematic Creation Overview
+</h3><p>A circuit schematic is an illustrative diagram demonstrating how a variety of electrical/electronic components represented by schematic symbols, are wired together.</p>
+<p>Here the designer inputs the schematic into KiCad’s schematic capture (editor) tool. If one or more components in the circuit is not available in the schematic symbols library, the designer must create a new schematic symbol and add it to the schematic. The procedure for schematic symbol creation is beyond the scope of this tutorial. It may be covered in a future blog entry.</p>
+<p>Once the schematic is completed and verified, a footprint assignment tool is then used to assign every <strong>schematic symbol</strong> in the schematic to a <strong>layout footprint</strong>. If one or more components (schematic symbols) in the design have no valid footprint(s) in the footprint library, the designer must create a suitable footprint, before mapping it to its appropriate schematic symbol. The procedure for layout footprint creation is yet again outside the scope of this tutorial and may be covered in a future blog entry.</p>
+<p>At this point, the user can generate the <strong>bill of materials (BOM)</strong> list containing a list of all the components required by the schematic, and generate the <strong>schematic netlist</strong>. The schematic netlist is simply a file that textually describes all the components and the interconnections / wiring between them as illustrated in the schematic.</p>
+<h3 id="layout-creation-overview">Layout Creation Overview
+</h3><p>Here the designer will first open KiCad’s PCB / layout editor tool, and set the appropriate design rules for the layout. The design rules are determined by the PCB manufacturer and ensure that the KiCad layout design meets the specifications required for successful fabrication.</p>
+<p>The designer will then import the schematic <em>netlist</em> into the layout editor tool and create the PCB’s outline via the ‘Edge.Cuts’ (board edge) layer. Copper fills / pours for ground planes and other zones are then allocated within the PCB outline.</p>
+<p>Next, all component footprints are <em>placed</em> within the PCB outline and the traces between the components are routed (as per the wires/nets in the schematic). Once the layout is complete, the designer will perform a design rule check (DRC) to ensure that the layout meets all the design rules and can indeed be fabricated by the PCB manufacturing house. The final step is to generate the layout&rsquo;s Gerber files and send them to the PCB manufacturing house for fabrication.</p>
+<h2 id="schematic-symbol-vs-layout-footprint">Schematic Symbol vs Layout Footprint
+</h2><p>Schematic symbols denote the schematic representation of a component. For example the schematic symbol of a resistor is shown in Figure 2. Note that because a schematic symbol is an <strong>abstract illustration</strong> representing a component, it&rsquo;s exact size, placement and dimensions matters in so far as to ensure that the schematic is clear, uncluttered and legible. The size &amp; position of the schematic symbol does not translate into the physical world.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_02.png"
+    alt="Figure 2: Resistor schematic symbol" width="400px"><figcaption>
+      <p>Figure 2: Resistor schematic symbol</p>
+    </figcaption>
+</figure>
+
+<p>Layout footprints on the other hand are just that, the footprint representation that will be &lsquo;printed on &amp; drilled into&rsquo; the printed circuit board.  Layout footprints typically consists of a silkscreen portion outlining the size and shape of the component to be placed, and copper through hole / surface mount pads that connect the components pins to the traces on the PCB.</p>
+<p>The dimensions of the layout footprint must match the dimensions of the component that it represents. Since the component will be placed onto its layout footprint in the physical world. The placement of the footprint must also be well thought out. Figure 3 illustrates a matching layout footprint for the resistor schematic symbol in Figure 2.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_03.png"
+    alt="Figure 3: Resistor layout footprint" width="400px"><figcaption>
+      <p>Figure 3: Resistor layout footprint</p>
+    </figcaption>
+</figure>
+
+<h2 id="introduction-to-kicad">Introduction to KiCad
+</h2><figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_04.png"
+    alt="Figure 4: Main KiCad window" width="700px"><figcaption>
+      <p>Figure 4: Main KiCad window</p>
+    </figcaption>
+</figure>
+
+<p>When the KiCad application runs, the first thing the user sees is the main KiCad window, From this window, a variety of tools can be accessed including:</p>
+<ul>
+<li>Schematic editor - used for schematic capture</li>
+<li>Symbol (Schematic) editor - used to edit existing schematic symbols and create new ones</li>
+<li>PCB layout editor - used for PCB layout design</li>
+<li>Footprint  editor - used to edit existing layout footprints and create new ones</li>
+<li>Gerber viewer - used to inspect Gerber files</li>
+<li>Image Converter - used for creating logos from bitmap images among other things</li>
+<li>Calculator tools - used for various calculations i.e. calculate current capacity of a trace</li>
+<li>Drawing sheet editor - edit drawing sheet borders and title blocks for use in schematics and PCB designs</li>
+<li>Plugin and content Manager - Manage downloadable packages from KiCad and 3rd party repositories.</li>
+</ul>
+<h3 id="creating-a-new-project">Creating a New Project
+</h3><figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_05.png"
+    alt="Figure 5: Create a new project" width="700px"><figcaption>
+      <p>Figure 5: Create a new project</p>
+    </figcaption>
+</figure>
+
+<p>Create a new root directory where all KiCad projects will be saved. Call this directory <em>KiCadProj</em> or some other relevant name,</p>
+<p>In KiCad goto <em>File-&gt;New Project</em></p>
+<p>Create a new project called <em>led_blinky</em> and save it in the <em>KiCadProj</em> directory. This will automatically create a folder name <em>led_blinky</em> under the <em>KiCadProj</em> directory and create a <strong>.kicad_pro</strong> project file in it. All other files related to this project i.e. schematic, layout, netlist e.t.c. will be saved into this folder.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_06.png"
+    alt="Figure 6: Project Created" width="700px"><figcaption>
+      <p>Figure 6: Project Created</p>
+    </figcaption>
+</figure>
+
+<h4 id="the-astable-multivibrator-circuit">The Astable Multivibrator Circuit
+</h4><p>The transistor based <a class="link" href="https://en.wikipedia.org/wiki/Multivibrator"  target="_blank" rel="noopener"
+    >astable multivibrator</a> circuit shown in the schematic below is a simple square wave oscillator. It generates two square waves that exhibit a 180 degree phase shift. For more on the theory behind this circuit’s operation, the curious reader can go <a class="link" href="https://en.wikipedia.org/wiki/Multivibrator#Operation"  target="_blank" rel="noopener"
+    >here</a>.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_07.png"
+    alt="Figure 7: Astable Multivibrator Circuit" width="700px"><figcaption>
+      <p>Figure 7: Astable Multivibrator Circuit</p>
+    </figcaption>
+</figure>
+
+<p>Connecting LED’s to the collector of each transistor turns the circuit into an LED flasher. The frequency of oscillation is a function of the values of R2, R3, C1 &amp; C2 and is approximately equal to :</p>
+$$f = \frac{1}{ln(2) \times (R_2C_1 + R_3C_2)}$$
+<p>Assuming that \(R_2 = R_3 = R \) and \(C_1 = C_2 = C \), the frequency of oscillation becomes,</p>
+$$f = \frac{1}{ln(2) \times RC }$$
+<h3 id="kicad-schematic-editor">KiCad Schematic Editor
+</h3><p>KiCad&rsquo;s schematic editor is quite powerful and integrates a ton of functionality. Some of which will be covered in this section.</p>
+<h4 id="hotkeys">Hotkeys
+</h4><p>Let&rsquo;s start with the schematic editor from the KiCad main window. Before going any further, it is important to familiarize yourself with the hotkeys available within KiCad. It might not seem necessary, but it is well worth your time to memorize the hotkeys for some of the more commonly used actions.  To get the list, go to <em>Help-&gt;List Hotkeys</em> or press <em>Ctrl-F1</em> and look under the <strong>Schematic Editor</strong> listview. Things that can be done easily with hotkeys in the schematic editor are listed below:</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_08.png"
+    alt="Figure 8: KiCad Schematic Editor Hotkeys" width="700px"><figcaption>
+      <p>Figure 8: KiCad Schematic Editor Hotkeys</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>e - Edit properties of a component</li>
+<li>m - Move a component</li>
+<li>ctrl+D - Duplicate (Copy) a component</li>
+<li>r - Rotate a component</li>
+<li>x - Mirror a component along the X axis</li>
+<li>y - Mirror a component along the Y axis</li>
+<li>a - Add a component</li>
+<li>t - Add Schematic text</li>
+<li>Delete - Delete a component</li>
+</ul>
+<p>Using these shortcuts/hotkeys will make working with KiCad much faster and efficient.</p>
+<h4 id="page-settings">Page Settings
+</h4><p>To fill in the legend in the bottom left hand corner, go to <em>File-&gt;Page Settings</em> , and fill in the various details i.e. revision number, date, title e.t.c. The page size and orientation can also be changed from the Page Settings dialog.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_09.png"
+    alt="Figure 9: Edit Page Settings" width="700px"><figcaption>
+      <p>Figure 9: Edit Page Settings</p>
+    </figcaption>
+</figure>
+
+<p>Once you are done with the page settings,the legend will be updated as shown in Figure 10.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_10.png"
+    alt="Figure 10: Updated Legend" width="700px"><figcaption>
+      <p>Figure 10: Updated Legend</p>
+    </figcaption>
+</figure>
+
+<h4 id="zooming-in--out">Zooming in &amp; out
+</h4><p>To quickly zoom in and out of the schematic area one can use the mouse scroll wheel. Alternatively, you can also use the zoom icons in the center of the top toolbar.</p>
+<h4 id="schematic-capture">Schematic capture
+</h4><p>Now we add the components to the schematic! To add components, use the shortcut ‘a’ or click on the op-amp icon (triangular three pin component with a ‘+’ and ‘-’ signs on its inputs) in the top righthand corner. The following schematic symbols will be needed:</p>
+<ul>
+<li>Two NPN transistors.<strong>2N3904</strong> should be fine.</li>
+<li>Four Resistors. Select Component <strong>R_Small_US</strong>. R, R_US and R_Small can also be used.</li>
+<li>Two Capacitors. Select Component <strong>C_Polarized_Small_US</strong>. Any capacitor symbol with polarity will work, since this circuit utilizes polarized electrolytic capacitors.</li>
+<li>Two Light emitting diodes (LED)s. Select component <strong>LED</strong>. LED_Small can also be used.</li>
+<li>A power symbol. Select Component <strong>Battery</strong>.</li>
+<li>A ground symbol. Select Component <strong>GND</strong>.</li>
+<li>Four mounting holes. Select Component <strong>MountingHole</strong>.</li>
+<li>An SPDT (single pole double throw) switch <strong>SW_SPDT</strong>.</li>
+</ul>
+<p>Once these components are added to the schematic, use hotkeys to copy (c), move(m), delete(Delete), edit part values(e), rotate (r) and/or mirror(x/y) these components as needed. You can also right click on the component and a context menu will pop up giving you similar functionality. The hotkeys will make things go faster however.</p>
+<p>Once all the parts are placed, connect them with wires. To start a wire you can use the hotkey (w) or click on the diagonal  blue wire icon (<em>Add a Wire</em>) on the right toolbar. By default all wires are straight. To draw the diagonal wires, you’ll have to click on the <em>Switch H &amp; V only mode for new wires and buses</em> icon. It is located on the left toolbar and has a small picture of two lines cutting each other at a 90 degree angle. Alternatively, you can use the <em>Shift+Space</em> shortcut.</p>
+<p>Additionally, make sure you add a <em>no connect flag</em> to pin 3 of the SPDT switch (as shown in the figure below). This can be accomplished with the hotkey <em>Q</em> or by selecting the &lsquo;x&rsquo; icon in the right toolbar.</p>
+<p>Once completed, the schematic should look similar the one in Figure 11. Make sure that all components are assigned the correct values.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_11.png"
+    alt="Figure 11: Completed schematic" width="700px"><figcaption>
+      <p>Figure 11: Completed schematic</p>
+    </figcaption>
+</figure>
+
+<h4 id="component-annotation-and-the-electrical-rule-check-erc">Component Annotation and the Electrical Rule Check (ERC)
+</h4><p>Notice that each symbol come with two textual descriptions;</p>
+<ul>
+<li>a <strong>reference</strong> such as <em>R1</em>, <em>R2</em>, <em>C1</em>, <em>Q1</em>, <em>D2</em>, <em>SW1</em>, <em>BT1</em> e.t.c, and a</li>
+<li><strong>name</strong> such as <em>SW-SPDT</em> or <em>LED</em>. Notice that for passive components, the <em>name</em> field ends up being set to their component values i.e. <em>330</em>, <em>10u</em> e.t.c.</li>
+</ul>
+<p>Both fields can be modified by selecting the symbol in question and then either <em>right click-&gt;Properties</em> or pressing the &lsquo;E&rsquo; hotkey. It is important that each symbol in the schematic has a valid and <strong>unique</strong> reference value. This is because each symbol is represented in the netlist via its reference value. For example you cannot have two resistors with the same reference number <em>R1</em>.</p>
+<p>The process of giving each component a unique reference value is known as <strong>Component Annotation</strong>. The KiCad schematic editor performs annotation for us automatically so you should not have to worry about it. Note that the reference value for each symbol consists of:</p>
+<ul>
+<li>a reference designator (R for resistors, C for capacitors e.t.c.), and a</li>
+<li>unique number.</li>
+</ul>
+<p>Different symbols get different reference designators. A list of reference designators is provided below:</p>
+<ul>
+<li>Resistor - <strong>R</strong></li>
+<li>Capacitor - <strong>C</strong></li>
+<li>Inductor - <strong>L</strong></li>
+<li>Diode - <strong>D</strong></li>
+<li>Transistor - <strong>Q</strong></li>
+<li>Integrated circuit (I.C.) - <strong>U</strong></li>
+<li>Connector - <strong>J</strong></li>
+<li>Switch - <strong>SW</strong></li>
+<li>Battery - <strong>BT</strong></li>
+<li>Mounting Hole - <strong>H</strong></li>
+</ul>
+<p>Add the <strong>PWR_FLAG</strong> symbol to both the VCC (power) and GND components/symbols. The reason for this will be explained shortly. The schematic should now look similar to that shown in Figure 12.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_12.png"
+    alt="Figure 12: Completed Schematic with PWR_FLAG" width="700px"><figcaption>
+      <p>Figure 12: Completed Schematic with PWR_FLAG</p>
+    </figcaption>
+</figure>
+
+<p>The KiCad schematic editor has a built-in Electrical Rule Check (ERC). The ERC ensures that the schematic is electrically sound and that power nets (wires) are connected to an appropriate single power driver. It also highlights floating pins e.t.c.</p>
+<p>In order to run &amp; pass the ERC, the current circuit needs to have a single power driver net. In our schematic that would be the VCC net. To facilitate this, attach a <strong>PWR_FLAG</strong> symbol to both the VCC (power source) and GND (power sink) symbols.  Since this was already done, proceed to running the ERC check by clicking on the <strong>Perform Electrical Rules Check</strong>  (checklist) icon in the top toolbar as shown in the figure below. If everything is OK, the ERC should pass successfully with no violations.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_13.png"
+    alt="Figure 13: ERC Passed!" width="700px"><figcaption>
+      <p>Figure 13: ERC Passed!</p>
+    </figcaption>
+</figure>
+
+<h4 id="assign-footprints-to-schematic-symbols">Assign Footprints to Schematic Symbols
+</h4><p>So far the schematic has been captured and an ERC was successfully passed. The next step is to assign a layout footprint to each schematic symbol. This is necessary to prepare our design for layout. Click on the <em>Assign Footprints</em> icon (containing a schematic symbol of an operation amplifier and an integrated circuit footprint linked) on the top toolbar. This should open the <em>Assign footprints</em> dialog shown in Figure 14.</p>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_14.png"
+    alt="Figure 14: Assign footprints dialog with All Symbols assigned" width="700px"><figcaption>
+      <p>Figure 14: Assign footprints dialog with All Symbols assigned</p>
+    </figcaption>
+</figure>
+
+<p>In the <em>Assign Footprints</em> dialog the designer needs to assign the layout footprints in the rightmost column to the schematic symbols (with reference values) in centre column. Notice that the leftmost column has a list of the KiCad&rsquo;s builtin layout footprint libraries.</p>
+<p>The goal here is to match our schematic symbols (centre column) with appropriate layout footprints in the rightmost column. To help us achieve this goal, several filter icons are available that facilitate filtering through all the available footprints by keyword, pin count, library or search pattern.</p>
+<p>For example, assume that the design needs a AAA battery connector with two pins (power and ground), to do this one can:</p>
+<ul>
+<li>
+<p>turn on the filter footprint by library and select the ‘Battery’ library from the leftmost column,</p>
+</li>
+<li>
+<p>turn on the filter footprint by pin count, which will automatically look for all footprints with a pin count of two (same as that of the BT1 schematic symbol)</p>
+</li>
+<li>
+<p>turn on the filter footprint by search keyword or pattern and type in the adjacent text box AAA, which helps homing in on all footprints with ‘AAA’ in their names.</p>
+</li>
+</ul>
+<figure><img src="/p/pcb-layout-design-with-kicad-part-i-introduction-schematic-capture/img/img01_15.png"
+    alt="Figure 15: Assigned battery holder footprint" width="700px"><figcaption>
+      <p>Figure 15: Assigned battery holder footprint</p>
+    </figcaption>
+</figure>
+
+<p>This should leave us with three options. Select the <em>Battery:BatteryHolder_Keystone_2479_3xAAA</em> footprint by clicking on it. Notice how its assigned to the BT1 schematic symbol in the centre column in Figure 14.</p>
+<p>The actual footprint can be inspected by clicking on the <em>View the selected footprint in the footprint viewer</em> icon (IC with magnifying glass). Many of the footprints built into KiCad have part-names and/or additional dimensions information embedded in their KiCad footprint names, making it easier to search for those parts on Electronic part distributor websites like <a class="link" href="https://www.digikey.ca"  target="_blank" rel="noopener"
+    >Digikey</a> or <a class="link" href="https://ca.mouser.com"  target="_blank" rel="noopener"
+    >Mouser</a>.</p>
+<p>In a similar manner, associate the remaining schematic symbols to the following footprints:</p>
+<ul>
+<li>BT1 - Battery:BatteryHolder_Keystone_2479_3xAAA</li>
+<li>C1,C2 - Capacitor_THT:CP_Radial_D6.3mm_P2.50mm</li>
+<li>D1,D2 - LED_THT:LED_D5.0mm</li>
+<li>H1-H4 - MountingHole:MountingHole_3.2mm_M3</li>
+<li>Q1,Q2 - 2N3904:Package_TO_SOT_THT:TO-92_Inline</li>
+<li>R1-R4 - Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</li>
+<li>SW1   - Button_Switch_THT:SW_E-Switch_EG1224_SPDT_Angled</li>
+</ul>
+<p>Now click on the <em>Apply, Save Schematic &amp; Continue</em> button, then the OK button.</p>
+<p>Congratulations! You have completed the schematic capture process and are now ready to layout the board. This will be covered in a future blog entry.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/kicad/">KiCAD</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/pcb-layout-design-with-kicad-part-ii-layout-creation/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">PCB Layout Design with KiCad Part II: Layout Creation</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Hussam Al-Hertani
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

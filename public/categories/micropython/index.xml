@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Micropython on Hussam Talks Tech</title>
-        <link>https://hussamtalkstech.com/categories/micropython/</link>
+        <link>http://localhost:1313/categories/micropython/</link>
         <description>Recent content in Micropython on Hussam Talks Tech</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
-        <lastBuildDate>Mon, 17 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://hussamtalkstech.com/categories/micropython/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 17 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/micropython/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Building a Micropython image from source for the ESP32-S3 with 16MB of Flash</title>
-        <link>https://hussamtalkstech.com/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</link>
+        <link>http://localhost:1313/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</link>
         <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://hussamtalkstech.com/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</guid>
-        <description>&lt;p&gt;In a &lt;a class=&#34;link&#34; href=&#34;https://hussamtalkstech.com/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;, I successfully flashed a pre-built micropython image on the ESP32S3 Devkit-C-v1.1 board. Unfortunately the &lt;a class=&#34;link&#34; href=&#34;https://micropython.org/download/ESP32_GENERIC_S3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+        <guid>http://localhost:1313/p/building-a-micropython-image-from-source-for-the-esp32-s3-with-16mb-of-flash/</guid>
+        <description>&lt;p&gt;In a &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;, I successfully flashed a pre-built micropython image on the ESP32S3 Devkit-C-v1.1 board. Unfortunately the &lt;a class=&#34;link&#34; href=&#34;https://micropython.org/download/ESP32_GENERIC_S3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;official prebuilt ESP32-S3 images on the Micropython wesbite site&lt;/a&gt;, support up to 8MB of Flash only. The ESP32S3 Devkit-C-v1.1 board (&lt;em&gt;ESP32-S3-DevKitC-1-N16R8V&lt;/em&gt;) that I have has 16MB of Flash available; half of which was not detected. In order to get Micropython to utilize the entirety of the available 16MB of Flash memory, I had to build a custom Micropython image (from source).&lt;/p&gt;
 &lt;p&gt;The task of building a custom Micropython image can be divided into the following steps:&lt;/p&gt;
 &lt;ul&gt;
@@ -225,7 +225,7 @@ CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=&amp;#34;partitions-16MiB.csv&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;or this for further brevity:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Bash&#34; data-lang=&#34;Bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 erase_flash
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;: $ esptool.py --chip esp32s3 --port /dev/ttyUSB0 write_flash -z &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; build-ESP32_GENERIC_S3-FLASH_16M_SPIRAM_OCT/firmware.bin
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Because the esp-idf&amp;rsquo;s environment variables were loaded with the &lt;code&gt;export.sh&lt;/code&gt; command, the terminal should have access to the esptool programmer via the esp-idf SDK without resorting to the use of the Python virtual environment created in the &lt;a class=&#34;link&#34; href=&#34;https://hussamtalkstech.com/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Because the esp-idf&amp;rsquo;s environment variables were loaded with the &lt;code&gt;export.sh&lt;/code&gt; command, the terminal should have access to the esptool programmer via the esp-idf SDK without resorting to the use of the Python virtual environment created in the &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/&#34; &gt;previous blog entry&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;After resetting the board and opening Thonny, we are greeted with the Micropython Shell shown below:&lt;/p&gt;
 &lt;p&gt;
 &lt;img src=&#34;fig1.png&#34; alt=&#34;Custom Micropython Shell&#34;  width=&#34;1107&#34; height=&#34;669&#34;   style=&#34;width: 100%; max-width: 800px;&#34;/&gt;
@@ -246,10 +246,10 @@ CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=&amp;#34;partitions-16MiB.csv&amp;#34;
         </item>
         <item>
         <title>Flashing Micropython on the ESP32-S3 Microcontroller</title>
-        <link>https://hussamtalkstech.com/p/flashing-micropython-on-the-esp32-s3-microcontroller/</link>
+        <link>http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/</link>
         <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://hussamtalkstech.com/p/flashing-micropython-on-the-esp32-s3-microcontroller/</guid>
+        <guid>http://localhost:1313/p/flashing-micropython-on-the-esp32-s3-microcontroller/</guid>
         <description>&lt;p&gt;I recently purchase an &lt;a class=&#34;link&#34; href=&#34;https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;ESP32-S3-DevKitC-1 v1.1&lt;/a&gt; development board and wanted to program it Micropython.&lt;/p&gt;
 &lt;p&gt;I got the &lt;em&gt;ESP32-S3-DevKitC-1-N16R8V&lt;/em&gt; variant with the &lt;a class=&#34;link&#34; href=&#34;https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-2_datasheet_en.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
