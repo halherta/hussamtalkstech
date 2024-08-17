@@ -8,9 +8,11 @@ description = "Introductory KiCad tutorial"
   math = true
 tags = [
     "KiCAD",
+    "Electronics"
 ]
 categories = [
     "KiCAD",
+    "Electronics"
 ]
 +++
 
