@@ -260,4 +260,4 @@ To generate the drill(.drl) file:
 
 {{< figure src="img/img02_28.png" caption="Figure 28: Gerber Viewer" width=700px >}}
 
-And that's it! Compress the *Gerbers* folder into a zip file and upload it onto your favorite PCB manufacturer website. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.
+And that's it! Compress the *Gerbers* folder into a zip file and upload it onto your favorite PCB manufacturer website. I'm making the entire [KiCAD project available for download from my github](https://www.github.com/halherta/IntrotoKicadtut). This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.

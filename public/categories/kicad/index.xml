@@ -326,7 +326,8 @@ $$ Val_{mil} = \frac{Val_{mm} \times 1000}{25.4} $$
     &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;And that&amp;rsquo;s it! Compress the &lt;em&gt;Gerbers&lt;/em&gt; folder into a zip file and upload it onto your favorite PCB manufacturer website. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.&lt;/p&gt;
+&lt;p&gt;And that&amp;rsquo;s it! Compress the &lt;em&gt;Gerbers&lt;/em&gt; folder into a zip file and upload it onto your favorite PCB manufacturer website. I&amp;rsquo;m making the entire &lt;a class=&#34;link&#34; href=&#34;https://www.github.com/halherta/IntrotoKicadtut&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;KiCAD project available for download from my github&lt;/a&gt;. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.&lt;/p&gt;
 </description>
         </item>
         <item>

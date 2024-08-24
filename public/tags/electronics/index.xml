@@ -7,7 +7,80 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
-        <lastBuildDate>Wed, 17 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/electronics/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 23 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/electronics/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MicroPython driver for the PCA9685</title>
+        <link>http://localhost:1313/p/micropython-driver-for-the-pca9685/</link>
+        <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/micropython-driver-for-the-pca9685/</guid>
+        <description>&lt;p&gt;The PCA9685 chip is a 16 channel PWM driver with 12-bits of resolution. It&amp;rsquo;s intended to control via PWM the up to 16 LEDs. But thanks to the fact that it can output frequencies from 1526Hz down to 24Hz, it can also be used to control up to servos. Servos usually expect a 50Hz signal (20ms period). The position of the shaft is a function of the ON time. For many standard servos:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1ms ON time moves the shaft to the -90 degree position.&lt;/li&gt;
+&lt;li&gt;2ms ON time moves the shaft to the +90 degree position.&lt;/li&gt;
+&lt;li&gt;1.5ms ON time moves the shaft to the 0 degree position.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+&lt;img src=&#34;fig1.png&#34; alt=&#34;Figure 1. Servo ON time to shaft position mapping&#34;  width=&#34;512&#34; height=&#34;376&#34;   style=&#34;width: 100%; max-width: 500px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;These exact ON times are not always followed. The beefier MG996R servos have a different set of ON times to shaft position mapping:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0.5ms ON time moves the shaft to the -90 degree position.&lt;/li&gt;
+&lt;li&gt;2.5ms ON time moves the shaft to the +90 degree position.&lt;/li&gt;
+&lt;li&gt;1.5ms ON time moves the shaft to the 0 degree position.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The PCA9685 chip can be controlled from a microcontroller over the I2C bus. Each one of its 16 channels can be configured to have a different duty cycle. All 16 channels however must have the same frequency which is configured by writing a value into the PRESCALE register. This value divides the frequency of the internal oscillator 25MHz into a frequency between 24Hz and 1526Hz.&lt;/p&gt;
+&lt;p&gt;The duty cycle for each channel is configured via 2 pairs of registers. One pair determine when the ON pulse starts and the other pair controls when the ON pulse ends.&lt;/p&gt;
+&lt;p&gt;I recently developed an Arduino shield for the PCA9685 I2C chip in KiCAD as a part of an educational board ecosystem that I call the &lt;strong&gt;IOT Innovation Platform&lt;/strong&gt;. I will introduce these boards in future blog entries.&lt;/p&gt;
+&lt;p&gt;
+&lt;img src=&#34;fig2.jpeg&#34; alt=&#34;Figure 2. My PCA9685 Arduino shield / daughterboard plugged into the &amp;lt;strong&amp;gt;IOT Innovation Platform&amp;lt;/strong&amp;gt;&#34;  width=&#34;1280&#34; height=&#34;1706&#34;   style=&#34;width: 100%; max-width: 500px;&#34;/&gt;
+&lt;/p&gt;
+&lt;p&gt;I decided to use an ESP32S3 microcontroller (also a part of the &lt;strong&gt;IOT Innovation Platform&lt;/strong&gt; ) running Micropython for testing. So I had to write PCA9685 driver program in Micropython.&lt;/p&gt;
+&lt;p&gt;The PCA9685 Driver class provides low level functions that can set the PWM frequency for the PCA9685 as well as independently set the duty cycle for each one of the 16 channels either as a percentage, an ON time pulse duration, or via start and end count values for the ON Pulse.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pca9685 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; PCA9685Driver
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; time
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Initialize PCA9685 with default I2C settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pwm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; PCA9685Driver()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Print I2C address of the device (should be 0x40)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;i2c&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;scan())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Set PWM frequency to 1200Hz and duty cycle to 60% on channel 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_pwm_frequency(&lt;span style=&#34;color:#ae81ff&#34;&gt;1200&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_pwm_dc_percent(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;60&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;time&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;It also has higher level abstraction functions for servo control.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pca9685 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; PCA9685Driver
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; time
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Initialize PCA9685 with default I2C settings&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pwm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; PCA9685Driver()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Print I2C address of the device (should be 0x40)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;i2c&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;scan())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# For channels 1, 14, and 15, vary the on-time from 0.5ms to 2.5ms (ideal for 180° rotation for MG996R servos)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Set PWM frequency to 50Hz for servo control&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_pwm_frequency(&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; angle &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;190&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;servo_set_angle_custom(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, angle, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2.5&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# channel 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;servo_set_angle_custom(&lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;, angle, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2.5&lt;/span&gt;) &lt;span style=&#34;color:#75715e&#34;&gt;# channel 14&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;servo_set_angle_custom(&lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;, angle, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2.5&lt;/span&gt;) &lt;span style=&#34;color:#75715e&#34;&gt;# channel 15&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;angle: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;angle&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        time&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; angle &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;servo_set_angle_custom(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, angle, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2.5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;servo_set_angle_custom(&lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;, angle, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2.5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        pwm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;servo_set_angle_custom(&lt;span style=&#34;color:#ae81ff&#34;&gt;15&lt;/span&gt;, angle, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2.5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;angle: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;angle&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        time&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sleep(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The complete PCA9685 driver class and demo code can be found on &lt;a class=&#34;link&#34; href=&#34;https://github.com/halherta/pca9685&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;my github page&lt;/a&gt;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>PCB Layout Design with KiCad Part II: Layout Creation</title>
         <link>http://localhost:1313/p/pcb-layout-design-with-kicad-part-ii-layout-creation/</link>
         <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
@@ -326,7 +399,8 @@ $$ Val_{mil} = \frac{Val_{mm} \times 1000}{25.4} $$
     &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;And that&amp;rsquo;s it! Compress the &lt;em&gt;Gerbers&lt;/em&gt; folder into a zip file and upload it onto your favorite PCB manufacturer website. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.&lt;/p&gt;
+&lt;p&gt;And that&amp;rsquo;s it! Compress the &lt;em&gt;Gerbers&lt;/em&gt; folder into a zip file and upload it onto your favorite PCB manufacturer website. I&amp;rsquo;m making the entire &lt;a class=&#34;link&#34; href=&#34;https://www.github.com/halherta/IntrotoKicadtut&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;KiCAD project available for download from my github&lt;/a&gt;. This has been a rather long entry. My goal is to make this tutorial available in a video format in the near future.&lt;/p&gt;
 </description>
         </item>
         <item>

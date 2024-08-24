@@ -7,7 +7,31 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
-        <lastBuildDate>Sat, 17 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 23 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Electronics</title>
+        <link>http://localhost:1313/categories/electronics/</link>
+        <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/electronics/</guid>
+        <description>&lt;img src="http://localhost:1313/categories/electronics/Electronics_logo.jpg" alt="Featured image of post Electronics" /&gt;</description>
+        </item>
+        <item>
+        <title>ESP32</title>
+        <link>http://localhost:1313/categories/esp32/</link>
+        <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/esp32/</guid>
+        <description>&lt;img src="http://localhost:1313/categories/esp32/Esp32-logo.png" alt="Featured image of post ESP32" /&gt;</description>
+        </item>
+        <item>
+        <title>Micropython</title>
+        <link>http://localhost:1313/categories/micropython/</link>
+        <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/micropython/</guid>
+        <description>&lt;img src="http://localhost:1313/categories/micropython/Micropython-logo.png" alt="Featured image of post Micropython" /&gt;</description>
+        </item>
+        <item>
         <title>C</title>
         <link>http://localhost:1313/categories/c/</link>
         <pubDate>Sat, 17 Aug 2024 00:00:00 +0000</pubDate>
@@ -24,36 +48,12 @@
         <description>&lt;img src="http://localhost:1313/categories/c&#43;&#43;/cpp-logo.png" alt="Featured image of post C&#43;&#43;" /&gt;</description>
         </item>
         <item>
-        <title>Electronics</title>
-        <link>http://localhost:1313/categories/electronics/</link>
-        <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/categories/electronics/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/electronics/Electronics_logo.jpg" alt="Featured image of post Electronics" /&gt;</description>
-        </item>
-        <item>
         <title>KiCAD</title>
         <link>http://localhost:1313/categories/kicad/</link>
         <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/categories/kicad/</guid>
         <description>&lt;img src="http://localhost:1313/categories/kicad/KiCad-logo.png" alt="Featured image of post KiCAD" /&gt;</description>
-        </item>
-        <item>
-        <title>ESP32</title>
-        <link>http://localhost:1313/categories/esp32/</link>
-        <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/categories/esp32/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/esp32/Esp32-logo.png" alt="Featured image of post ESP32" /&gt;</description>
-        </item>
-        <item>
-        <title>Micropython</title>
-        <link>http://localhost:1313/categories/micropython/</link>
-        <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/categories/micropython/</guid>
-        <description>&lt;img src="http://localhost:1313/categories/micropython/Micropython-logo.png" alt="Featured image of post Micropython" /&gt;</description>
         </item>
         <item>
         <title>Raspberry Pi</title>
