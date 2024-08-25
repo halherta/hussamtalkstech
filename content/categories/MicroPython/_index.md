@@ -1,7 +1,7 @@
 ---
-title: "Micropython"
+title: "MicroPython"
 description: "MicroPython related Projects"
-slug: "micropython"
+slug: "MicroPython"
 image: "Micropython-logo.png"
 style:
     background: "#2a9d8f"

@@ -8,33 +8,39 @@
         <language>en</language>
         <copyright>Hussam Al-Hertani</copyright>
         <lastBuildDate>Fri, 23 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/electronics/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>MicroPython driver for the PCA9685</title>
-        <link>http://localhost:1313/p/micropython-driver-for-the-pca9685/</link>
+        <title>MicroPython Library for the PCA9685</title>
+        <link>http://localhost:1313/p/micropython-library-for-the-pca9685/</link>
         <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/p/micropython-driver-for-the-pca9685/</guid>
-        <description>&lt;p&gt;The PCA9685 chip is a 16 channel PWM driver with 12-bits of resolution. It&amp;rsquo;s intended to control via PWM the up to 16 LEDs. But thanks to the fact that it can output frequencies from 1526Hz down to 24Hz, it can also be used to control up to servos. Servos usually expect a 50Hz signal (20ms period). The position of the shaft is a function of the ON time. For many standard servos:&lt;/p&gt;
+        <guid>http://localhost:1313/p/micropython-library-for-the-pca9685/</guid>
+        <description>&lt;p&gt;The PCA9685 chip is a 16 channel PWM controller with 12-bits of resolution. It can control via PWM up to 16 LEDs. Thanks to the fact that it can output a variable frequency from 1526Hz down to 24Hz, it can also be used to control up to 16 servos. Servos usually expect a 50Hz signal (20ms period). The position of the shaft is a function of the ON time. For many standard servos:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;1ms ON time moves the shaft to the -90 degree position.&lt;/li&gt;
 &lt;li&gt;2ms ON time moves the shaft to the +90 degree position.&lt;/li&gt;
 &lt;li&gt;1.5ms ON time moves the shaft to the 0 degree position.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;
-&lt;img src=&#34;fig1.png&#34; alt=&#34;Figure 1. Servo ON time to shaft position mapping&#34;  width=&#34;512&#34; height=&#34;376&#34;   style=&#34;width: 100%; max-width: 500px;&#34;/&gt;
-&lt;/p&gt;
-&lt;p&gt;These exact ON times are not always followed. The beefier MG996R servos have a different set of ON times to shaft position mapping:&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/micropython-library-for-the-pca9685/fig1.png&#34;
+    alt=&#34;Figure 1. Servo ON time to shaft position mapping&#34; width=&#34;500px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 1. Servo ON time to shaft position mapping&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;These  ON time specifications are not always followed. The beefier MG996R servos for example, have a different set of ON times to shaft position mapping:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;0.5ms ON time moves the shaft to the -90 degree position.&lt;/li&gt;
 &lt;li&gt;2.5ms ON time moves the shaft to the +90 degree position.&lt;/li&gt;
 &lt;li&gt;1.5ms ON time moves the shaft to the 0 degree position.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The PCA9685 chip can be controlled from a microcontroller over the I2C bus. Each one of its 16 channels can be configured to have a different duty cycle. All 16 channels however must have the same frequency which is configured by writing a value into the PRESCALE register. This value divides the frequency of the internal oscillator 25MHz into a frequency between 24Hz and 1526Hz.&lt;/p&gt;
-&lt;p&gt;The duty cycle for each channel is configured via 2 pairs of registers. One pair determine when the ON pulse starts and the other pair controls when the ON pulse ends.&lt;/p&gt;
+&lt;p&gt;The PCA9685 chip can be controlled from a microcontroller over the I2C bus. Each one of its 16 channels can be configured to have a different duty cycle. All 16 channels however must have the same frequency; which is configured by writing a value into the PRESCALE register. This value divides the 25MHz internal oscillator frequency, into a PWM frequency between 24Hz and 1526Hz.&lt;/p&gt;
+&lt;p&gt;The duty cycle for each channel is configured via 2 pairs of registers. One pair determines when the ON pulse starts and the other pair determines when it ends.&lt;/p&gt;
 &lt;p&gt;I recently developed an Arduino shield for the PCA9685 I2C chip in KiCAD as a part of an educational board ecosystem that I call the &lt;strong&gt;IOT Innovation Platform&lt;/strong&gt;. I will introduce these boards in future blog entries.&lt;/p&gt;
-&lt;p&gt;
-&lt;img src=&#34;fig2.jpeg&#34; alt=&#34;Figure 2. My PCA9685 Arduino shield / daughterboard plugged into the &amp;lt;strong&amp;gt;IOT Innovation Platform&amp;lt;/strong&amp;gt;&#34;  width=&#34;1280&#34; height=&#34;1706&#34;   style=&#34;width: 100%; max-width: 500px;&#34;/&gt;
-&lt;/p&gt;
-&lt;p&gt;I decided to use an ESP32S3 microcontroller (also a part of the &lt;strong&gt;IOT Innovation Platform&lt;/strong&gt; ) running Micropython for testing. So I had to write PCA9685 driver program in Micropython.&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/p/micropython-library-for-the-pca9685/fig2.jpeg&#34;
+    alt=&#34;Figure 2. My PCA9685 Arduino shield / daughterboard plugged into the IOT Innovation Platform&#34; width=&#34;500px&#34;&gt;&lt;figcaption&gt;
+      &lt;p&gt;Figure 2. My PCA9685 Arduino shield / daughterboard plugged into the IOT Innovation Platform&lt;/p&gt;
+    &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;I decided to use an ESP32S3 microcontroller (also a part of the &lt;strong&gt;IOT Innovation Platform&lt;/strong&gt; ) running Micropython for testing. So I had to write a PCA9685 Library in MicroPython.&lt;/p&gt;
 &lt;p&gt;The PCA9685 Driver class provides low level functions that can set the PWM frequency for the PCA9685 as well as independently set the duty cycle for each one of the 16 channels either as a percentage, an ON time pulse duration, or via start and end count values for the ON Pulse.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pca9685 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; PCA9685Driver
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; time

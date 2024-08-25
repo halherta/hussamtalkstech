@@ -1,6 +1,6 @@
 +++
 author = "Hussam Al-Hertani"
-title = "MicroPython driver for the PCA9685"
+title = "MicroPython Library for the PCA9685"
 date = "2024-08-23"
 draft = false
 description = "PCA9685 driver in Micropython"
@@ -14,7 +14,7 @@ categories = [
 ]
 +++
 
-The PCA9685 chip is a 16 channel PWM driver with 12-bits of resolution. It can control via PWM the up to 16 LEDs. Thanks to the fact that it can output a variable frequency from 1526Hz down to 24Hz, it can also be used to control up to 16 servos. Servos usually expect a 50Hz signal (20ms period). The position of the shaft is a function of the ON time. For many standard servos: 
+The PCA9685 chip is a 16 channel PWM controller with 12-bits of resolution. It can control via PWM up to 16 LEDs. Thanks to the fact that it can output a variable frequency from 1526Hz down to 24Hz, it can also be used to control up to 16 servos. Servos usually expect a 50Hz signal (20ms period). The position of the shaft is a function of the ON time. For many standard servos: 
 
 - 1ms ON time moves the shaft to the -90 degree position. 
 - 2ms ON time moves the shaft to the +90 degree position. 
@@ -36,7 +36,7 @@ I recently developed an Arduino shield for the PCA9685 I2C chip in KiCAD as a pa
 
 {{< figure src="fig2.jpeg" caption="Figure 2. My PCA9685 Arduino shield / daughterboard plugged into the IOT Innovation Platform" width=500px >}}
 
-I decided to use an ESP32S3 microcontroller (also a part of the **IOT Innovation Platform** ) running Micropython for testing. So I had to write a PCA9685 driver program in Micropython. 
+I decided to use an ESP32S3 microcontroller (also a part of the **IOT Innovation Platform** ) running Micropython for testing. So I had to write a PCA9685 Library in MicroPython. 
 
 The PCA9685 Driver class provides low level functions that can set the PWM frequency for the PCA9685 as well as independently set the duty cycle for each one of the 16 channels either as a percentage, an ON time pulse duration, or via start and end count values for the ON Pulse. 
 
